@@ -1,0 +1,19 @@
+.searchBarForm{
+    display: flex;
+    align-items: center;
+    margin-right: 5vh;
+}
+
+.searchBarInput {
+    width: 100%;
+    justify-self: center;
+    padding: 10px; 
+    border-radius: 8px; 
+    border: 1px solid rgb(5, 34, 139);
+    box-sizing: border-box; 
+    height: 40px;
+}
+
+.searchFirstName {
+  padding: 10px; 
+}

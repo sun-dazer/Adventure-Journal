@@ -1,0 +1,25 @@
+.mainHeader{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: rgb(189, 194, 237);
+    margin-bottom: 15px;
+    border-bottom: 1px solid;
+
+}
+
+.topButton {
+    width: 100%;
+    padding: 10px 50px; 
+    border: none;
+    color: black;
+    font-size: 18px;
+    background-color: transparent;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+.topButton:hover {
+    background-color: rgb(98, 101, 122);
+    color: white;
+}
