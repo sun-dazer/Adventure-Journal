@@ -1,7 +1,7 @@
 .Header {
     display: flex;
     justify-content: space-evenly;
-    background-color: #d6c9f7;
+    background-color: #ffffff;
     margin-bottom: 15px;
     border-bottom: 1px solid;
     position: sticky; 
@@ -23,6 +23,6 @@
     transition: background-color 0.3s ease;
 }
 .topButton:hover {
-    background-color: rgb(140, 153, 255);
-    color: white;
+    background-color: rgb(212, 250, 255);
+    color: rgb(0, 0, 0);
 }

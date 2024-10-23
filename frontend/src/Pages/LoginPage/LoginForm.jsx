@@ -42,7 +42,7 @@ const LoginForm = () => {
 
                 <div className="register-link">
                     {/* Switched here too */}
-                    <p>Don't have an account? <Link to="#">Register</Link></p>
+                    <p>Don't have an account? <Link to="/CreateProfiles">Register</Link></p>
                 </div>
             </form>
         </div>

@@ -4,7 +4,7 @@ const HomePage = () => {
   return (
     <div className="HomePage">
       <h2>Home</h2>
-      <p>This is the first page. Maybe homepage or profile creation page.</p>
+      <p>About us. Will swap to who the user is following after they log in.</p>
     </div>
   );
 };
