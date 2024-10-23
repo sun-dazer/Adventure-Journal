@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import LoginForm from './Pages/LoginPage/LoginForm/LoginForm';
 import Header from './Components/Header/Header';
-import Page1 from './Pages/page1';
-import Page2 from './Pages/page2';
+import Page1 from './Pages/AboutUs/Home';
+import Page2 from './Pages/ViewProfile/Profile';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {

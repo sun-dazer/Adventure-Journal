@@ -1,7 +1,7 @@
 .mainHeader{
     display: flex;
     justify-content: space-evenly;
-    background-color: rgb(189, 194, 237);
+    background-color: rgb(164, 170, 226);
     margin-bottom: 15px;
     border-bottom: 1px solid;
 
@@ -20,6 +20,6 @@
     transition: background-color 0.3s ease;
 }
 .topButton:hover {
-    background-color: rgb(98, 101, 122);
+    background-color: rgb(140, 153, 255);
     color: white;
 }

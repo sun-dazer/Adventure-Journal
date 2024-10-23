@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Page1 = () => {
+const HomePage = () => {
   return (
-    <div className="page">
-      <h2>Page 1</h2>
+    <div className="HomePage">
+      <h2>Home</h2>
       <p>This is the first page. Maybe homepage or profile creation page.</p>
     </div>
   );
 };
 
-export default Page1;
+export default HomePage;
