@@ -1,10 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import LoginForm from './Components/LoginForm/LoginForm';
-import Links from './Components/Links';
-import Page1 from './Components/Pages/page1';
-import Page2 from './Components/Pages/page2';
+import LoginForm from './Pages/LoginPage/LoginForm/LoginForm';
+import Links from './Link';
+import Page1 from './Pages/page1';
+import Page2 from './Pages/page2';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
