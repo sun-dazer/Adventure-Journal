@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import "./mainHeader.css"
+import "./Header.css"
 
-export default function MainHeader(){
+export default function Header(){
     return(
         <>
-        <div className="mainHeader">
+        <div className="Header">
             <Link to="/page1" style={{ textDecoration: 'none' }}>
                 <button className="topButton">
                     Home
@@ -17,7 +17,7 @@ export default function MainHeader(){
                 </button>
             </Link>
             <div className=''>
-            <Link to="/login" style={{ textDecoration: 'none' }}>
+            <Link to="/loginform" style={{ textDecoration: 'none' }}>
                 <button className="topButton" >
                     Login
                 </button>
