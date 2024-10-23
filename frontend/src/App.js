@@ -1,9 +1,15 @@
 import React from 'react';
 import './App.css';
-import LoginForm from './Pages/LoginPage/LoginForm/LoginForm';
+
+import LoginForm from './Pages/LoginPage/LoginForm';
+import HomePage from './Pages/AboutUs/Home';
+import Profile from './Pages/ViewProfile/Profile';
+import CreateProfiles from './Pages/MakeProfile/CreateProfiles';
+import Explore from './Pages/Explore/Explore';
+import Tips from './Pages/TipsForum/Tips';
+
 import Header from './Components/Header/Header';
-import Page1 from './Pages/AboutUs/Home';
-import Page2 from './Pages/ViewProfile/Profile';
+
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
@@ -11,9 +17,12 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/loginform" element={<LoginForm />} />
-        <Route path="/page1" element={<Page1 />} />
-        <Route path="/page2" element={<Page2 />} />
+        <Route path="/Login" element={<LoginForm />} />
+        <Route path="/Home" element={<HomePage />} />
+        <Route path="/Profile" element={<Profile />} />
+        <Route path="/CreateProfiles" element={<CreateProfiles />} />
+        <Route path="/Explore" element={<Explore />} />
+        <Route path="/Tips" element={<Tips />} />
       </Routes>
     </div>
   );

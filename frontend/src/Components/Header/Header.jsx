@@ -6,19 +6,29 @@ export default function Header(){
     return(
         <>
         <div className="Header">
-            <Link to="/HomePage" style={{ textDecoration: 'none' }}>
+            <Link to="/Home" style={{ textDecoration: 'none' }}>
                 <button className="topButton">
                     Home
                 </button>
             </Link>
-            <Link to="/loginform" style={{ textDecoration: 'none' }}>
+            <Link to="/Explore" style={{ textDecoration: 'none' }}>
                 <button className="topButton" >
-                    Login
+                    Explore
                 </button>
             </Link>
-            <Link to="/ProfilePage" style={{ textDecoration: 'none' }}>
+            <Link to="/Tips" style={{ textDecoration: 'none' }}>
+                <button className="topButton" >
+                    Tips Forum
+                </button>
+            </Link>
+            <Link to="/Profile" style={{ textDecoration: 'none' }}>
                 <button className="topButton">
                     Profile
+                </button>
+            </Link>
+            <Link to="/Login" style={{ textDecoration: 'none' }}>
+                <button className="topButton" >
+                    Login
                 </button>
             </Link>
         </div>
