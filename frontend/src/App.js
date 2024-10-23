@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './Fonts/styles.css'; 
 
 import LoginForm from './Pages/LoginPage/LoginForm';
 import HomePage from './Pages/AboutUs/Home';
