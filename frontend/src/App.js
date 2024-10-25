@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Fonts/styles.css'; 
 
 import LoginForm from './Pages/LoginPage/LoginForm';
@@ -13,11 +13,22 @@ import Header from './Components/Header/Header';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   return (
     <div className="App">
-      <Header />
+      <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
-        <Route path="/Login" element={<LoginForm />} />
+        <Route path="/Login" element={<LoginForm onLogin={handleLogin}/>} />
         <Route path="/Home" element={<HomePage />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/CreateProfiles" element={<CreateProfiles />} />
