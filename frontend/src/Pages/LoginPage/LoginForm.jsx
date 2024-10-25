@@ -4,7 +4,8 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
 
-const LoginForm = () => {
+const LoginForm = ({ onLogin }) => {
+    console.log("onLogin prop:", onLogin);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -14,7 +15,12 @@ const LoginForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (username && password) {
-            navigate('/page1');
+            onLogin();
+            navigate('/Explore');
+            /*navigate('/page1');*/
+        }
+        else{
+            setError('Invalid username or password');
         }
     };
 
