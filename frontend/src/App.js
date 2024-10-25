@@ -30,7 +30,7 @@ function App() {
       <Routes>
         <Route path="/Login" element={<LoginForm onLogin={handleLogin}/>} />
         <Route path="/Home" element={<HomePage />} />
-        <Route path="/Profile" element={<Profile />} />
+        <Route path="/Profile" element={<Profile onLogout={handleLogout} />} />
         <Route path="/CreateProfiles" element={<CreateProfiles />} />
         <Route path="/Explore" element={<Explore />} />
         <Route path="/Tips" element={<Tips />} />
