@@ -17,7 +17,7 @@ const ForgotPassword = () => {
       {!submitted ? (
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="username">Enter your username:</label>
+            <label htmlFor="username">Username:</label>
             <input
               type="text"
               id="username"
