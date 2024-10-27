@@ -1,10 +1,8 @@
 // SearchBar.js
 
 import React , {useState} from 'react';
-import "./Searchbar.css";
+import "./SearchBar.css";
 import { useNavigate } from 'react-router-dom';
-
-import api from '../../api';
 
 const SearchBar = () => {
 

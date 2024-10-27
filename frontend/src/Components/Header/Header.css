@@ -1,13 +1,11 @@
 .Header {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     background-color: #ffffff;
     margin-bottom: 15px;
     border-bottom: 1px solid;
-    position: sticky; 
-    top: 0; /* Stick it to the top */
-    z-index: 1000; /* Ensure it stays above other content */
-    padding: 15px 0; /* Padding for header */
+    position: relative; 
+    padding: 15px 20px; /* Padding for header */
 }
 
 .topButton {
@@ -23,6 +21,6 @@
     transition: background-color 0.3s ease;
 }
 .topButton:hover {
-    background-color: rgb(212, 250, 255);
+    background-color: rgb(137, 210, 220);;
     color: rgb(0, 0, 0);
 }

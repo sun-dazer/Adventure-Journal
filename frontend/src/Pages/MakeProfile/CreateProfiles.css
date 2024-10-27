@@ -1,0 +1,66 @@
+.CreateProfiles {
+    width: 420px;
+    background: rgb(255, 255, 255);
+    color: rgb(137, 210, 220);
+    border-radius: 10px;
+    padding: 20px;
+    margin: auto; 
+    border: 2px solid rgb(137, 210, 220); 
+}
+
+.CreateProfiles h1 {
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 20px; 
+}
+
+.CreateProfiles form {
+    display: flex;
+    flex-direction: column;
+}
+
+.CreateProfiles div {
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.CreateProfiles label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+}
+
+.CreateProfiles input {
+    width: 100%;
+    height: 40px;
+    background: transparent;
+    border: 2px solid rgb(137, 210, 220);
+    border-radius: 30px;
+    font-size: 16px;
+    color: #000000;
+    padding: 10px 20px;
+    outline: none;
+}
+
+.CreateProfiles input::placeholder {
+    color: rgb(200, 200, 200); 
+}
+
+.CreateProfiles button {
+    width: 100%;
+    height: 45px;
+    background: rgb(137, 210, 220);
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 700;
+    margin-top: 20px; /* Space above button */
+}
+
+.CreateProfiles button:hover {
+    background: rgb(120, 180, 200); /* Darker shade on hover */
+}
