@@ -41,7 +41,7 @@ const LoginForm = ({ onLogin }) => {
                 <div className="remember-forgot">
                     <label><input type="checkbox" />Remember me</label>
                     {/* link instead of (hyperlink?) */}
-                    <Link to='#'>Forgot password?</Link>
+                    <Link to="/ForgotPassword">Forgot password?</Link>
                 </div>
 
                 <button type="submit">Login</button>

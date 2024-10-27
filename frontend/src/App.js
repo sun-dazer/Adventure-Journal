@@ -5,6 +5,7 @@ import LoginForm from './Pages/LoginPage/LoginForm';
 import HomePage from './Pages/AboutUs/Home';
 import Profile from './Pages/ViewProfile/Profile';
 import CreateProfiles from './Pages/MakeProfile/CreateProfiles';
+import ForgotPassword from './Pages/ForgotPassword/forgotPassword';
 import Explore from './Pages/Explore/Explore';
 import Tips from './Pages/TipsForum/Tips';
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/Home" element={<HomePage />} />
         <Route path="/Profile" element={<Profile onLogout={handleLogout} />} />
         <Route path="/CreateProfiles" element={<CreateProfiles />} />
+        <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/Explore" element={<Explore />} />
         <Route path="/Tips" element={<Tips />} />
       </Routes>
