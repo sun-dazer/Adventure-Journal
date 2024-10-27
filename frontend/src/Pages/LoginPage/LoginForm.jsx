@@ -13,9 +13,27 @@ const LoginForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (username && password) {
-            navigate('/page1');
-        }
+        if (!(username && password)) return;
+        fetch("http://localhost:8000/app/login", {
+            method: "POST",
+            body: JSON.stringify({
+                username: username,
+                password: password
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        }).then((resp) => {
+            if (resp.status === 200) {
+                navigate('/page1');
+            }
+            else {
+                resp.json().then((j) => {
+                    console.log(j);
+                });
+            }
+        });
     };
 
   return (
