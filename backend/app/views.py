@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .mongo.main import check, make_account, delete_account
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 @csrf_exempt
 def register(request):
@@ -19,7 +20,7 @@ def login(request):
         response["Access-Control-Allow-Headers"] = "X-CSRFToken, Content-Type"
         return response
     if request.method == "POST":
-        if check(request.POST.get("username"), request.POST.get("password")):
+        if check(json.loads(request.body).get("username"), json.loads(request.body).get("password")):
             return HttpResponse(str({"msg": "Success"}), status=200)
         return HttpResponse("{msg: 'Username or password were incorrect!'}", status=400)
 
