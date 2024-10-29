@@ -1,7 +1,7 @@
 import React from 'react';
 import './LoginForm.css';
 import { FaUser, FaLock } from "react-icons/fa";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useBeforeUnload } from 'react-router-dom';
 import { useState } from 'react';
 
 const LoginForm = ({ onLogin }) => {
@@ -14,14 +14,27 @@ const LoginForm = ({ onLogin }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (username && password) {
-            onLogin();
-            navigate('/Explore');
-            /*navigate('/page1');*/
-        }
-        else{
-            setError('Invalid username or password');
-        }
+        if (!(username && password)) return;
+        fetch("http://localhost:8000/app/login", {
+            method: "POST",
+            body: JSON.stringify({
+                username: username,
+                password: password,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        }).then((resp) => {
+            if (resp.status === 200) {
+                navigate('/page1');
+            }
+            else {
+                resp.json().then((j) => {
+                    console.log(j);
+                });
+            }
+        });
     };
 
   return (
