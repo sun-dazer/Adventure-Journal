@@ -10,7 +10,36 @@ const CreateProfiles = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // connect to backend here!
-    console.log('Profile Created:', { firstName, lastName, dob, username, password });
+    fetch("http://localhost:8000/app/register", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        dob,
+        username,
+        password,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return response.json().then((error) => {
+            throw new Error(error.msg);
+          });
+        }
+      })
+      .then((data) => {
+        console.log(data.msg);
+        // Redirect or show success message
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+        // Display error message
+      });
   };
 
   return (
