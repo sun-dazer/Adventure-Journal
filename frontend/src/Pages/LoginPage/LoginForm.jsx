@@ -26,14 +26,20 @@ const LoginForm = ({ onLogin }) => {
             },
             credentials: 'include'
         }).then((resp) => {
-            if (resp.status === 200) {
-                navigate('/page1');
-            }
-            else {
-                resp.json().then((j) => {
-                    console.log(j);
+            if (!resp.ok) {
+                return resp.json().then((err) => {
+                    throw new Error(err.msg);  // Handle JSON parsing errors here
                 });
             }
+            return resp.json();
+        })
+        .then((data) => {
+            console.log(data.msg); // Successfully logged in
+            navigate('/page1');
+        })
+        .catch((error) => {
+            console.error("Login error:", error);
+            setError(error.message); // Display the error in the UI
         });
     };
 
