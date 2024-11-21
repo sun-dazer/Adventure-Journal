@@ -1,5 +1,8 @@
 .Header {
+    height: 10vh; 
+    padding: 0 20px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     background-color: #ffffff;
     margin-bottom: 15px;
@@ -7,6 +10,7 @@
     position: relative; 
     padding: 15px 20px; /* Padding for header */
 }
+  
 
 .topButton {
     width: 100%;

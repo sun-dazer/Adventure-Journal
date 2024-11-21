@@ -10,6 +10,8 @@ import Explore from "./Pages/Explore/Explore";
 import Tips from "./Pages/TipsForum/Tips";
 
 import Header from "./Components/Header/Header";
+import Footer from "./Components/Footer/Footer";
+
 
 import { Routes, Route, useNavigate } from "react-router-dom";
 
@@ -59,6 +61,7 @@ function App() {
         <Route path="/Explore" element={<Explore />} />
         <Route path="/Tips" element={<Tips />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
