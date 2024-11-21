@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .mongo.main import check, make_account, delete_account
+from .mongo.main import check, make_account, delete_account, save_tip, get_tips
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
+from .mongo.main import client
 
 @csrf_exempt
 def register(request):
@@ -26,7 +27,7 @@ def register(request):
         except json.JSONDecodeError:
             return JsonResponse({"msg": "Invalid JSON format"}, status=400)
 
-@csrf_exempt
+
 @csrf_exempt
 def login(request):
     if request.method == "OPTIONS":
@@ -58,6 +59,7 @@ def login(request):
         # Attempt to check credentials
         try:
             if check(username, password):
+                request.session["username"] = username
                 return JsonResponse({"msg": "Success"}, status=200)
             else:
                 return JsonResponse({"msg": "Username or password were incorrect!"}, status=400)
@@ -68,10 +70,53 @@ def login(request):
 
     return JsonResponse({"msg": "Only POST requests are allowed"}, status=405)
 
+@csrf_exempt
+def logout(request):
+    if request.method == "POST":
+        # Clear the session
+        request.session.flush()  # Removes all session data
+        return JsonResponse({"msg": "Logout successful!"}, status=200)
+    return JsonResponse({"msg": "Only POST requests are allowed"}, status=405)
 
 @csrf_exempt
 def deregister(request):
     if request.method == "POST":
         if delete_account(request.POST.get("username"), request.POST.get("password")):
+            request.session.flush()
             return JsonResponse({"msg": "Success"}, status=200)
         return JsonResponse({"msg": "Account credentials incorrect!"}, status=400)
+
+@csrf_exempt
+def save_tip_view(request):
+    print("save_tip_view called")  # Debug
+    username = request.session.get('username')
+    if not username:
+        return JsonResponse({"msg": "User is not logged in!"}, status=403)
+    
+    if request.method == "POST":
+        try:
+            print("Request Body:", request.body) # debug
+            data = json.loads(request.body)
+            #username = data.get("username")
+            content = data.get("content")
+
+            if not username or not content:
+                return JsonResponse({"msg": "Username and content are required."}, status=400)
+
+            save_tip(username, content)
+            print("Tip saved successfully!")  # Debug log
+            return JsonResponse({"msg": "Tip saved successfully!"}, status=200)
+        except json.JSONDecodeError:
+            print("Invalid JSON format")  # Debug log
+            return JsonResponse({"msg": "Invalid JSON format"}, status=400)
+
+@csrf_exempt
+def get_tips_view(request):
+    
+        username = request.session.get('username')
+        if not username:
+            return JsonResponse({"msg": "User is not logged in!"}, status=403)
+        collection = client.get_database("local").get_collection("tips")
+        tips = list(collection.find({}, {"_id": 0}))
+        #tips = get_tips()
+        return JsonResponse({"tips": tips}, safe=False, status=200)
