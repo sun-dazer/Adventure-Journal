@@ -20,12 +20,6 @@ Unlike other fitness apps, this application emphasizes goal-based achievements a
 
 - **Map Integration**: Each profile includes an interactive map with pins that track the user's hikes.
 
-## Technologies Used
-
-- **Frontend**: React, HTML, CSS, JavaScript
-- **Backend**: Django, Django REST framework, MongoDB
-- **Hosting**: GitHub, MongoDB Atlas for database management
-
 ## Installation Instructions
 
 ### Prerequisites
