@@ -1,0 +1,29 @@
+.header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 0px;
+    padding: 0px 30px;
+}
+
+.header-navigation{
+    align-items: center;
+    justify-content: center; 
+    margin-left: 29vw;
+    width: 120%;
+}
+.logo {
+    position: absolute;
+    left: 2vw;
+    max-width: 200px; 
+    max-height: 100px; 
+}
+  
+.searchTop {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+  

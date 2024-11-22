@@ -13,7 +13,6 @@ const Tips = () => {
       method: "GET",
       credentials: "include", // Include cookies for session-based auth
     })
-
       .then((response) => {
         if (!response.ok) {
           if (response.status === 403) {
@@ -37,13 +36,14 @@ const Tips = () => {
     event.preventDefault();
     if (newTip.trim() === '') return; // Prevent adding empty tips
 
+    // Send the new tip to the server
     fetch("http://localhost:8000/app/save-tip/", {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ content: newTip }), // Only send content; username is handled by the backend session
+      body: JSON.stringify({ content: newTip }), 
     })
       .then((response) => {
         if (!response.ok) {
@@ -52,8 +52,7 @@ const Tips = () => {
         return response.json();
       })
       .then(() => {
-        setTips([{ username, content: newTip, created_at: new Date().toISOString() }, ...tips]); // Add new tip
-        setNewTip(''); // Clear the input field
+        window.location.reload();
       })
       .catch((error) => console.error("Error saving tip:", error));
   };
@@ -79,12 +78,14 @@ const Tips = () => {
         {tips.length === 0 ? (
           <p>No tips shared</p>
         ) : (
-          tips.map((tip, index) => (
-            <div key={index} className="Tip">
-              <p>{tip.content}</p>
-              <small>By: {tip.username}</small>
-            </div>
-          ))
+          tips
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // Sort tips by most recent
+            .map((tip, index) => (
+              <div key={index} className="Tip">
+                <small>{tip.username}</small> 
+                <p>{tip.content}</p>
+              </div>
+            ))
         )}
       </div>
     </div>

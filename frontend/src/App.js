@@ -9,18 +9,17 @@ import ForgotPassword from "./Pages/ForgotPassword/forgotPassword";
 import Explore from "./Pages/Explore/Explore";
 import Tips from "./Pages/TipsForum/Tips";
 
-import Header from "./Components/Header/Header";
+import HeaderWrapper from "./Components/HeaderWrapper/Wrapper";
 import Footer from "./Components/Footer/Footer";
-
 
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [search, setSearch] = useState(""); 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if a login token exists in localStorage
     const storedLoginState = localStorage.getItem("isLoggedIn");
     if (storedLoginState === "true") {
       setIsLoggedIn(true);
@@ -51,16 +50,25 @@ function App() {
 
   return (
     <div className="App">
-      <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
-      <Routes>
-        <Route path="/Login" element={<LoginForm onLogin={handleLogin} />} />
-        <Route path="/Home" element={<HomePage />} />
-        <Route path="/Profile" element={<Profile onLogout={handleLogout} />} />
-        <Route path="/CreateProfiles" element={<CreateProfiles />} />
-        <Route path="/ForgotPassword" element={<ForgotPassword />} />
-        <Route path="/Explore" element={<Explore />} />
-        <Route path="/Tips" element={<Tips />} />
-      </Routes>
+      <HeaderWrapper
+        isLoggedIn={isLoggedIn}
+        onLogout={handleLogout}
+        search={search}
+        setSearch={setSearch}
+      />
+
+      <main>
+        <Routes>
+          <Route path="/Login" element={<LoginForm onLogin={handleLogin} />} />
+          <Route path="/Home" element={<HomePage />} />
+          <Route path="/Profile" element={<Profile onLogout={handleLogout} />} />
+          <Route path="/CreateProfiles" element={<CreateProfiles />} />
+          <Route path="/ForgotPassword" element={<ForgotPassword />} />
+          <Route path="/Explore" element={<Explore />} />
+          <Route path="/Tips" element={<Tips />} />
+        </Routes>
+      </main>
+
       <Footer />
     </div>
   );
