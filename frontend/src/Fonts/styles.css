@@ -2,9 +2,11 @@
 .App {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-  }
-
+    min-height: 100vh; /* Full viewport height */
+    width: 100vw;      /* Full viewport width */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+  
 body {
     font-family: 'Source Sans Pro', sans-serif; /* Default font for body text */
     margin: 0;

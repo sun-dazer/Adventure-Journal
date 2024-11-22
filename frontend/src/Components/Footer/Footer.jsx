@@ -1,6 +1,6 @@
 import React from "react"
 
-import logo from "../../Images/TRAIL TALES.png"
+import logo from "../../Images/blue logo.png"
 
 import "./Footer.css"
 

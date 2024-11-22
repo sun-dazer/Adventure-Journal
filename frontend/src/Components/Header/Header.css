@@ -1,6 +1,5 @@
 .Header {
     height: 10vh; 
-    padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -8,7 +7,8 @@
     margin-bottom: 15px;
     border-bottom: 1px solid;
     position: relative; 
-    padding: 15px 20px; /* Padding for header */
+    padding: 15px 20px;
+    margin-top: 25px;
 }
   
 
@@ -24,6 +24,7 @@
     text-decoration: none;
     transition: background-color 0.3s ease;
 }
+
 .topButton:hover {
     background-color: rgb(137, 210, 220);;
     color: rgb(0, 0, 0);
