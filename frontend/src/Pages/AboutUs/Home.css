@@ -1,4 +1,29 @@
-.HomeBanner{
-    height: 200%;
-    object-fit: cover;
-}
+.HomePage {
+    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .logoTxt {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+  }
+  
+  .aboutSection {
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: left;
+  }
+  
+  .aboutSection h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  
+  .aboutSection p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  
