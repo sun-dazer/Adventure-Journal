@@ -28,8 +28,14 @@ export default function Header({ isLoggedIn, onLogout }){
                 <Link to="/Profile" style={{ textDecoration: 'none' }}>
                     <button className="topButton">Profile</button>
                 </Link>
-                </>
-            
+                {/* <button
+            className="topButton logoutButton"
+            onClick={onLogout} // Trigger logout
+          >
+            Logout
+          </button>
+          </> */}
+            </>
             )}
         </div>
     );

@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import datetime
 
 client = MongoClient("mongodb://localhost:27017/")
         
@@ -37,3 +38,25 @@ def delete_account(user, passw):
     with client.start_session(causal_consistency=True) as session:
         client.get_database("local").get_collection("accounts").delete_many({"username":user})
     return False
+
+#my tips
+def save_tip(user, content):
+    with client.start_session(causal_consistency=True) as session:
+        # Save the tip in the `tips` collection
+        collection = client.get_database("local").get_collection("tips")
+        collection.insert_one({
+            "username": user,
+            "content": content,
+            #changed here
+            "created_at": datetime.datetime.utcnow()
+        })
+        print(f"Tip saved for user {user}: {content}")
+        return True
+
+def get_tips():
+    with client.start_session(causal_consistency=True) as session:
+        # Retrieve all tips from the `tips` collection
+        collection = client.get_database("local").get_collection("tips")
+        tips = list(collection.find({}, {"_id": 0}))  # Exclude MongoDB `_id` field
+        print(f"Retrieved tips: {tips}")
+        return tips

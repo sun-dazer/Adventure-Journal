@@ -1,34 +1,34 @@
 import React from 'react';
 import "./Home.css";
 import HomeBanner from '../../Images/HomeBanner.png';
-import BeiyuImage from '../../Images/AnQiImage.png';
+import BeiyuImage from '../../Images/BeiYuImage.png';
 import AnQiImage from '../../Images/AnQiImage.png';
-import AngelImage from '../../Images/AnQiImage.png';
-import GriffinImage from '../../Images/AnQiImage.png';
+import AngelImage from '../../Images/AngelImage.png';
+import GriffinImage from '../../Images/GriffinImage.png';
 
 const teamMembers = [
   {
     name: "BeiYu Wang",
     role: "Project Manager & Frontend Developer",
-    bio: "BeiYu...",
+    bio: "",
     image: BeiyuImage,
   },
   {
     name: "Abigail An Qi Meiser",
     role: "UI/UX and Frontend Developer",
-    bio: "AnQi...",
+    bio: "",
     image: AnQiImage,
   },
   {
     name: "Angel Maldonado",
     role: "UI/UX Designer",
-    bio: "Angel...",
+    bio: "",
     image: AngelImage,
   },
   {
     name: "Griffin Dale",
     role: "Backend Developer",
-    bio: "Griffin...",
+    bio: "",
     image: GriffinImage,
   },
 ];

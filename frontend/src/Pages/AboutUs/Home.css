@@ -12,7 +12,7 @@
   
   .aboutSection {
     margin: 20px auto;
-    max-width: 600px;
+    max-width: 850px;
     text-align: left;
   }
   
@@ -25,5 +25,64 @@
     font-size: 1rem;
     line-height: 1.6;
     color: #555;
+  }
+  
+  /* Meet Our Team Section */
+  .teamSection {
+    margin-top: 40px;
+  }
+  
+  .teamSection h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .teamGrid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;  /* Makes the layout responsive */
+  }
+  
+  .teamMember {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 200px; 
+    max-width: 250px; 
+  }
+  
+  .teamMember:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .teamImage {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+  
+  .teamInfo h4 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  
+  .teamInfo p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .teamInfo strong {
+    font-weight: bold;
   }
   
