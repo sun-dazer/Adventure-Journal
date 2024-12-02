@@ -10,7 +10,7 @@ export default function Header({ isLoggedIn, onLogout }){
                 <Link to="/Home" style={{ textDecoration: 'none' }}>
                     <button className="topButton">Home</button>
                 </Link>
-                <Link to="/Posts" style={{ textDecoration: 'none' }}>
+                <Link to="/Tips" style={{ textDecoration: 'none' }}>
                     <button className="topButton">Tips Forum</button>
                 </Link>
                 <Link to="/Login" style={{ textDecoration: 'none' }}>
@@ -22,7 +22,7 @@ export default function Header({ isLoggedIn, onLogout }){
                 <Link to="/Home" style={{ textDecoration: 'none' }}>
                     <button className="topButton">Home</button>
                 </Link>
-                <Link to="/Posts" style={{ textDecoration: 'none' }}>
+                <Link to="/Tips" style={{ textDecoration: 'none' }}>
                     <button className="topButton">Tips Forum</button>
                 </Link>
                 <Link to="/Profile" style={{ textDecoration: 'none' }}>
