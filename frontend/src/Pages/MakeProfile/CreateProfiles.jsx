@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import "./CreateProfiles.css";
+import { useNavigate, Link } from 'react-router-dom';
+
 const CreateProfiles = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const[error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +32,7 @@ const CreateProfiles = () => {
           return response.json();
         } else {
           return response.json().then((error) => {
-            throw new Error(error.msg);
+            throw new Error(error.msg || "Profile creation failed. Please try again.");
           });
         }
       })
@@ -39,6 +43,7 @@ const CreateProfiles = () => {
       .catch((error) => {
         console.error("Error:", error.message);
         // Display error message
+        setError(error.message);
       });
   };
 
@@ -96,6 +101,13 @@ const CreateProfiles = () => {
             required
           />
         </div>
+
+        {error && (
+                    <div className="error-message">
+                        {error}
+                    </div>
+                )}
+
         <button type="submit">Create Profile</button>
       </form>
     </div>
