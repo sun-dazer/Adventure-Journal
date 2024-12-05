@@ -17,13 +17,12 @@ def register(request):
             dob = data.get("dob")
             username = data.get("username")
             password = data.get("password")
-            
+
             # Pass all fields to make_account
             if make_account(first_name, last_name, dob, username, password):
                 return JsonResponse({"msg": "Success"}, status=200)
             
             return JsonResponse({"msg": "Account already exists with that name!"}, status=400)
-        
         except json.JSONDecodeError:
             return JsonResponse({"msg": "Invalid JSON format"}, status=400)
 
