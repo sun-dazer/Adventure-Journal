@@ -113,10 +113,60 @@ def save_tip_view(request):
 @csrf_exempt
 def get_tips_view(request):
     
-        username = request.session.get('username')
-        if not username:
-            return JsonResponse({"msg": "User is not logged in!"}, status=403)
+        #username = request.session.get('username')
+        #if not username:
+        #    return JsonResponse({"msg": "User is not logged in!"}, status=403)
         collection = client.get_database("local").get_collection("tips")
         tips = list(collection.find({}, {"_id": 0}))
         #tips = get_tips()
         return JsonResponse({"tips": tips}, safe=False, status=200)
+
+@csrf_exempt
+def get_profile_view(request):
+    if request.method == "GET":
+        # Get the username from the session
+        username = request.session.get('username')
+        if not username:
+            return JsonResponse({"msg": "User is not logged in!"}, status=403)
+        
+        # Fetch the user's profile from the database
+        collection = client.get_database("local").get_collection("accounts")
+        profile = collection.find_one({"username": username}, {"_id": 0, "password": 0})  # Exclude sensitive fields
+        
+        if not profile:
+            return JsonResponse({"msg": "Profile not found!"}, status=404)
+        
+        # Return the profile information
+        return JsonResponse({"profile": profile}, status=200)
+    
+    return JsonResponse({"msg": "Only GET requests are allowed"}, status=405)
+
+@csrf_exempt
+def update_profile_view(request):
+    if request.method == "POST":
+        try:
+            username = request.session.get('username')
+            if not username:
+                return JsonResponse({"msg": "User is not logged in!"}, status=403)
+
+            data = json.loads(request.body)
+            first_name = data.get("first_name")
+            last_name = data.get("last_name")
+            bio = data.get("bio")
+
+            collection = client.get_database("local").get_collection("accounts")
+            collection.update_one(
+                {"username": username},
+                {"$set": {"first_name": first_name, "last_name": last_name, "bio": bio}}
+            )
+            return JsonResponse({"msg": "Profile updated successfully!"}, status=200)
+        except Exception as e:
+            return JsonResponse({"msg": f"Error updating profile: {e}"}, status=500)
+    return JsonResponse({"msg": "Only POST requests are allowed"}, status=405)
+
+@csrf_exempt
+def check_login_status(request):
+    username = request.session.get("username")  # Retrieve the username from the session
+    if username:
+        return JsonResponse({"is_logged_in": True, "username": username}, status=200)
+    return JsonResponse({"is_logged_in": False}, status=200)
