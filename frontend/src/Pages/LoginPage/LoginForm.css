@@ -110,3 +110,12 @@
 .register-link p a:hover {
     text-decoration: underline;
 }
+
+/* Added styles for the error message */
+.error-message {
+    color: red; /* Set the color of the error message to red */
+    font-size: 14.5px; /* Consistent font size with other labels */
+    text-align: center; /* Center the error message */
+    margin-bottom: 15px; /* Add some space below the error message */
+    font-weight: 600; /* Make the error message stand out a bit */
+}
