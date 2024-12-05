@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .mongo.main import check, make_account, delete_account, save_tip, get_tips
+from .mongo.main import check, make_account, delete_account, save_tip, get_tips, get_user, upvote_db, follow_db
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
@@ -111,11 +111,32 @@ def save_tip_view(request):
 
 @csrf_exempt
 def get_tips_view(request):
-    
         username = request.session.get('username')
         if not username:
             return JsonResponse({"msg": "User is not logged in!"}, status=403)
-        collection = client.get_database("local").get_collection("tips")
-        tips = list(collection.find({}, {"_id": 0}))
-        #tips = get_tips()
-        return JsonResponse({"tips": tips}, safe=False, status=200)
+        return JsonResponse({"tips": get_tips()}, safe=False, status=200)
+
+@csrf_exempt
+def get_user_info(request):
+        username = request.session.get('username')
+        if not username:
+            return JsonResponse({"msg": "User is not logged in!"}, status=403)
+        return JsonResponse({"profile": get_user(username)}, safe=False, status=200)
+
+@csrf_exempt
+def upvote(request):
+        username = request.session.get('username')
+        if not username:
+            return JsonResponse({"msg": "User is not logged in!"}, status=403)
+        if upvote_db(username, request["tipID"]):
+            return JsonResponse({}, safe=False, status=200)
+        return JsonResponse({"msg": "User could not upvote this post!"}, status=403)
+
+@csrf_exempt
+def follow(request):
+        username = request.session.get('username')
+        if not username:
+            return JsonResponse({"msg": "User is not logged in!"}, status=403)
+        if follow_db(username, request["otherUsername"]):
+            return JsonResponse({}, safe=False, status=200)
+        return JsonResponse({"msg": "User could not follow the specified account!"}, status=403)
