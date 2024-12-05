@@ -152,12 +152,12 @@ def update_profile_view(request):
             data = json.loads(request.body)
             first_name = data.get("first_name")
             last_name = data.get("last_name")
-            bio = data.get("bio")
+            # bio = data.get("bio")
 
             collection = client.get_database("local").get_collection("accounts")
             collection.update_one(
                 {"username": username},
-                {"$set": {"first_name": first_name, "last_name": last_name, "bio": bio}}
+                {"$set": {"first_name": first_name, "last_name": last_name}}
             )
             return JsonResponse({"msg": "Profile updated successfully!"}, status=200)
         except Exception as e:
