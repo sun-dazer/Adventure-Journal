@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .mongo.main import check_db, make_account_db, delete_account_db, save_tip_db, get_tips_db, get_user_db, upvote_tip_db, follow_db, save_post_db, get_posts_db, upvote_post_db, save_image_db, get_image_db
+from .mongo.main import check, make_account, delete_account, save_tip, get_tips
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
 from .mongo.main import client
-import base64
 
 @csrf_exempt
 def register(request):
@@ -18,12 +17,16 @@ def register(request):
             dob = data.get("dob")
             username = data.get("username")
             password = data.get("password")
-
+            bio = ""
+            followers = []
+            following = []
+            
             # Pass all fields to make_account
-            if make_account_db(first_name, last_name, dob, username, password):
+            if make_account(first_name, last_name, dob, username, password, bio, followers, following):
                 return JsonResponse({"msg": "Success"}, status=200)
             
             return JsonResponse({"msg": "Account already exists with that name!"}, status=400)
+        
         except json.JSONDecodeError:
             return JsonResponse({"msg": "Invalid JSON format"}, status=400)
 
@@ -58,7 +61,7 @@ def login(request):
 
         # Attempt to check credentials
         try:
-            if check_db(username, password):
+            if check(username, password):
                 request.session["username"] = username
                 return JsonResponse({"msg": "Success"}, status=200)
             else:
@@ -81,7 +84,7 @@ def logout(request):
 @csrf_exempt
 def deregister(request):
     if request.method == "POST":
-        if delete_account_db(request.POST.get("username"), request.POST.get("password")):
+        if delete_account(request.POST.get("username"), request.POST.get("password")):
             request.session.flush()
             return JsonResponse({"msg": "Success"}, status=200)
         return JsonResponse({"msg": "Account credentials incorrect!"}, status=400)
@@ -103,7 +106,7 @@ def save_tip_view(request):
             if not username or not content:
                 return JsonResponse({"msg": "Username and content are required."}, status=400)
 
-            save_tip_db(username, content)
+            save_tip(username, content)
             print("Tip saved successfully!")  # Debug log
             return JsonResponse({"msg": "Tip saved successfully!"}, status=200)
         except json.JSONDecodeError:
@@ -112,115 +115,142 @@ def save_tip_view(request):
 
 @csrf_exempt
 def get_tips_view(request):
-        username = request.session.get('username')
-        if not username:
-            return JsonResponse({"msg": "User is not logged in!"}, status=403)
-        return JsonResponse({"tips": get_tips_db()}, safe=False, status=200)
+    
+        #username = request.session.get('username')
+        #if not username:
+        #    return JsonResponse({"msg": "User is not logged in!"}, status=403)
+        collection = client.get_database("local").get_collection("tips")
+        tips = list(collection.find({}, {"_id": 0}))
+        #tips = get_tips()
+        return JsonResponse({"tips": tips}, safe=False, status=200)
 
 @csrf_exempt
-def get_user_info(request):
+def get_profile_view(request):
+    if request.method == "GET":
+        # Get the username from the session
         username = request.session.get('username')
+
         if not username:
             return JsonResponse({"msg": "User is not logged in!"}, status=403)
-        return JsonResponse({"profile": get_user_db(username)}, safe=False, status=200)
+        
+        # Fetch the user's profile from the database
+        collection = client.get_database("local").get_collection("accounts")
+        profile = collection.find_one({"username": username}, {"_id": 0, "password": 0})  # Exclude sensitive fields
+        
+        if not profile:
+            return JsonResponse({"msg": "Profile not found!"}, status=404)
+        
+        # Return the profile information
+        return JsonResponse({"profile": profile}, status=200)
+    
+    return JsonResponse({"msg": "Only GET requests are allowed"}, status=405)
 
 @csrf_exempt
-def upvote_tip(request):
-        username = request.session.get('username')
-        if not username:
-            return JsonResponse({"msg": "User is not logged in!"}, status=403)
-        try:
-            data = json.loads(request.body)
-        except json.JSONDecodeError:
-            print("Invalid JSON format")  # Debug log
-            return JsonResponse({"msg": "Invalid JSON format"}, status=400)
-        if upvote_tip_db(username, data["tipID"]):
-            return JsonResponse({}, safe=False, status=200)
-        return JsonResponse({"msg": "User could not upvote this post!"}, status=403)
-
-@csrf_exempt
-def follow(request):
-        username = request.session.get('username')
-        if not username:
-            return JsonResponse({"msg": "User is not logged in!"}, status=403)
-        try:
-            data = json.loads(request.body)
-        except json.JSONDecodeError:
-            print("Invalid JSON format")  # Debug log
-            return JsonResponse({"msg": "Invalid JSON format"}, status=400)
-        if follow_db(username, data["otherUsername"]):
-            return JsonResponse({}, safe=False, status=200)
-        return JsonResponse({"msg": "User could not follow the specified account!"}, status=403)
-
-@csrf_exempt
-def save_post_view(request):
-    print("save_tip_view called")  # Debug
-    username = request.session.get('username')
-    if not username:
-        return JsonResponse({"msg": "User is not logged in!"}, status=403)    
+def update_profile_view(request):
     if request.method == "POST":
         try:
-            print("Request Body:", request.body) # debug
+            username = request.session.get('username')
+            if not username:
+                return JsonResponse({"msg": "User is not logged in!"}, status=403)
+
             data = json.loads(request.body)
-            #username = data.get("username")
-            content = data.get("content")
-            location = data.get("location")
-            image = data.get("image")
-            if not username or not content or not location or not image:
-                return JsonResponse({"msg": "Username, content, location, and image are required."}, status=400)
+            first_name = data.get("first_name")
+            last_name = data.get("last_name")
+            bio = data.get("bio")  #maybe added next?
 
-            save_post_db(username, content, location, image)
-            print("Post saved successfully!")  # Debug log
-            return JsonResponse({"msg": "Post saved successfully!"}, status=200)
-        except json.JSONDecodeError:
-            print("Invalid JSON format")  # Debug log
-            return JsonResponse({"msg": "Invalid JSON format"}, status=400)
+            collection = client.get_database("local").get_collection("accounts")
+            collection.update_one(
+                {"username": username},
+                {"$set": {"first_name": first_name, "last_name": last_name, "bio": bio}}
+            )
+            return JsonResponse({"msg": "Profile updated successfully!"}, status=200)
+        except Exception as e:
+            return JsonResponse({"msg": f"Error updating profile: {e}"}, status=500)
+    return JsonResponse({"msg": "Only POST requests are allowed"}, status=405)
 
 @csrf_exempt
-def get_posts_view(request):
-        username = request.session.get('username')
+def check_login_status(request):
+    username = request.session.get("username")  # Retrieve the username from the session
+    if username:
+        return JsonResponse({"is_logged_in": True, "username": username}, status=200)
+    return JsonResponse({"is_logged_in": False}, status=200)
+
+@csrf_exempt
+def follow_user(request):
+    if request.method == "POST":
+        # Check if user is logged in
+        username = request.session.get("username")
         if not username:
-            return JsonResponse({"msg": "User is not logged in!"}, status=403)
-        return JsonResponse({"posts": get_posts_db()}, safe=False, status=200)
-
-@csrf_exempt
-def upvote_post(request):
-        username = request.session.get('username')
-        if not username:
-            return JsonResponse({"msg": "User is not logged in!"}, status=403)
-        try:
-            data = json.loads(request.body)
-        except json.JSONDecodeError:
-            print("Invalid JSON format")  # Debug log
-            return JsonResponse({"msg": "Invalid JSON format"}, status=400)
-        if upvote_post_db(username, data["postID"]):
-            return JsonResponse({}, safe=False, status=200)
-        return JsonResponse({"msg": "User could not upvote this post!"}, status=403)
-
-@csrf_exempt
-def save_image(request):
-    username = request.session.get('username')
-    if not username:
-        return JsonResponse({"msg": "User is not logged in!"}, status=403)
-    try:
-        image_binary = base64.b64decode(request.body)
-        return JsonResponse({"msg": "Saved image!", "imageID":save_image_db(image_binary)}, status=400)
-    except json.JSONDecodeError:
-        print("Invalid JSON format")  # Debug log
-        return JsonResponse({"msg": "Invalid JSON format"}, status=400)
-
-@csrf_exempt
-def get_image(request):
-    username = request.session.get('username')
-    if not username:
-        return JsonResponse({"msg": "User is not logged in!"}, status=403)
-    try:
+            return JsonResponse({"msg": "User not logged in."}, status=403)
+        
         data = json.loads(request.body)
-        imageID = data["imageID"]
-        file = get_image_db(imageID)
-        if file is None:
-            return JsonResponse({"msg": "Could not find image!"}, status=400)
-        return HttpResponse(file.read(), content_type="image/jpeg")
-    except json.JSONDecodeError:
-        print("Invalid JSON format")  # Debug log
-        return JsonResponse({"msg": "Invalid JSON format"}, status=400)
+        user_to_follow = data.get("user_to_follow")
+        
+        if not user_to_follow:
+            return JsonResponse({"msg": "No user specified to follow."}, status=400)
+        if user_to_follow == username:
+            return JsonResponse({"msg": "You cannot follow yourself!"}, status=400)
+
+        accounts = client.get_database("local").get_collection("accounts")
+        
+        # Add user_to_follow to the current user's "following"
+        accounts.update_one(
+          {"username": username},
+          {"$addToSet": {"following": user_to_follow}}
+        )
+
+        # Add current user to user_to_follow's "followers"
+        accounts.update_one(
+          {"username": user_to_follow},
+          {"$addToSet": {"followers": username}}
+        )
+
+        return JsonResponse({"msg": "Followed successfully!"}, status=200)
+    return JsonResponse({"msg": "Only POST requests are allowed"}, status=405)
+
+@csrf_exempt
+def unfollow_user(request):
+    if request.method == "POST":
+        username = request.session.get("username")
+        if not username:
+            return JsonResponse({"msg": "User not logged in."}, status=403)
+        
+        data = json.loads(request.body)
+        user_to_unfollow = data.get("user_to_unfollow")
+
+        if not user_to_unfollow:
+            return JsonResponse({"msg": "No user specified to unfollow."}, status=400)
+
+        accounts = client.get_database("local").get_collection("accounts")
+
+        
+        accounts.update_one(
+          {"username": username},
+          {"$pull": {"following": user_to_unfollow}}
+        )
+
+        # Remove current user from other follower
+        accounts.update_one(
+          {"username": user_to_unfollow},
+          {"$pull": {"followers": username}}
+        )
+
+        return JsonResponse({"msg": "Unfollowed successfully!"}, status=200)
+    return JsonResponse({"msg": "Only POST requests are allowed"}, status=405)
+
+@csrf_exempt
+def get_user_profile_view(request):
+    if request.method == "GET":
+        # username provided as a query param, e.g. /get-user-profile/?username=alice
+        user_to_view = request.GET.get('username')
+        if not user_to_view:
+            return JsonResponse({"msg": "No username provided."}, status=400)
+
+        collection = client.get_database("local").get_collection("accounts")
+        profile = collection.find_one({"username": user_to_view}, {"_id": 0, "password": 0})
+
+        if not profile:
+            return JsonResponse({"msg": "User not found!"}, status=404)
+
+        return JsonResponse({"profile": profile}, status=200)
+    return JsonResponse({"msg": "Only GET requests are allowed"}, status=405)
