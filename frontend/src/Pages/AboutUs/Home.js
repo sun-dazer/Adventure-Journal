@@ -9,7 +9,7 @@ import GriffinImage from '../../Images/GriffinImage.png';
 const teamMembers = [
   {
     name: "BeiYu Wang",
-    role: "Project Manager & Frontend Developer",
+    role: "Project Manager and Frontend Developer",
     bio: "",
     image: BeiyuImage,
   },
@@ -21,7 +21,7 @@ const teamMembers = [
   },
   {
     name: "Angel Maldonado",
-    role: "UI/UX Designer",
+    role: "UI/UX and Backend Developer",
     bio: "",
     image: AngelImage,
   },
