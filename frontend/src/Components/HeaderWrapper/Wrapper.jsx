@@ -16,5 +16,6 @@ export default function HeaderWrapper({ isLoggedIn, onLogout, search, setSearch 
           <SearchBar search={search} setSearch={setSearch} />
         </div>
     </header>
+    
   );
 }
