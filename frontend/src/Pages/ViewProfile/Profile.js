@@ -87,7 +87,6 @@ const Profile = ({ onLogout }) => {
   };
 
   if (error) {
-    // user is not logged in
     return (
       <div className="error-center">
         <h2>Login or Sign Up!</h2>
