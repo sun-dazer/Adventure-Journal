@@ -13,4 +13,7 @@ urlpatterns = [
     path('update-profile/', views.update_profile_view, name='update_profile'),
     path('get-profile/', views.get_profile_view, name='get_profile'),
     path("check-login/", views.check_login_status, name="check-login"),
+    path("follow/", views.follow_user, name="follow_user"),
+    path("unfollow/", views.unfollow_user, name="unfollow_user"),
+    path("get-user-profile/", views.get_user_profile_view, name="get_user_profile"),
 ]

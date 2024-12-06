@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import "./CreateProfiles.css";
+import { useNavigate } from 'react-router-dom';
 const CreateProfiles = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,6 +36,7 @@ const CreateProfiles = () => {
       })
       .then((data) => {
         console.log(data.msg);
+        navigate("/login");
         // Redirect or show success message
       })
       .catch((error) => {

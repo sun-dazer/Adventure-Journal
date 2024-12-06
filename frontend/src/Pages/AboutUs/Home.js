@@ -21,7 +21,7 @@ const teamMembers = [
   },
   {
     name: "Angel Maldonado",
-    role: "UI/UX Designer",
+    role: "UI/Backend",
     bio: "",
     image: AngelImage,
   },

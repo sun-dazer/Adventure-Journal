@@ -23,13 +23,13 @@ def check(user, passw):
         print("No account found with username:", user)
         return False
 
-def make_account(first_name, last_name, dob, user, passw, bio):
+def make_account(first_name, last_name, dob, user, passw, bio, followers, following):
     with client.start_session(causal_consistency=True) as session:
         collection = client.get_database("local").get_collection("accounts")
         account = collection.find_one({"username":user})
         if account is not None:
             return False
-        collection.insert_one({"first_name": first_name, "last_name": last_name, "dob": dob, "username":user, "password":passw, "bio":bio})
+        collection.insert_one({"first_name": first_name, "last_name": last_name, "dob": dob, "username":user, "password":passw, "bio":bio, "followers":followers, "following":following})
         return True
 
 def delete_account(user, passw):

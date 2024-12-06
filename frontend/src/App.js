@@ -11,6 +11,7 @@ import Tips from "./Pages/TipsForum/Tips";
 
 import HeaderWrapper from "./Components/HeaderWrapper/Wrapper";
 import Footer from "./Components/Footer/Footer";
+import UserProfile from "./Pages/ViewProfile/UserProfile";
 
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 
@@ -63,6 +64,7 @@ function App() {
           <Route path="/Login" element={<LoginForm onLogin={handleLogin} />} />
           <Route path="/Home" element={<HomePage />} />
           <Route path="/Profile" element={<Profile onLogout={handleLogout} />} />
+          <Route path= "user/:username" element={<UserProfile />} />
           <Route path="/CreateProfiles" element={<CreateProfiles />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/Explore" element={<Explore />} />
