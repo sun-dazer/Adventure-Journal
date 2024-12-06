@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
 import "./CreateProfiles.css";
-<<<<<<< HEAD
-import { useNavigate } from 'react-router-dom';
-=======
 import { useNavigate, Link } from 'react-router-dom';
 
->>>>>>> adding-gitignore
 const CreateProfiles = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-<<<<<<< HEAD
-=======
   const[error, setError] = useState('');
->>>>>>> adding-gitignore
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {

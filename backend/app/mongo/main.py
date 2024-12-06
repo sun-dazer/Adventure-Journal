@@ -29,11 +29,8 @@ def make_account(first_name, last_name, dob, user, passw, bio, followers, follow
         account = collection.find_one({"username":user})
         if account is not None:
             return False
-<<<<<<< HEAD
         collection.insert_one({"first_name": first_name, "last_name": last_name, "dob": dob, "username":user, "password":passw, "bio":bio, "followers":followers, "following":following})
-=======
-        collection.insert_one({"first_name": first_name, "last_name": last_name, "dob": dob, "username":user, "password":passw, "posts":[], "upvoted":[], "followers":[], "following":[]})
->>>>>>> adding-gitignore
+        #collection.insert_one({"first_name": first_name, "last_name": last_name, "dob": dob, "username":user, "password":passw, "posts":[], "upvoted":[], "followers":[], "following":[]})
         return True
 
 def delete_account(user, passw):

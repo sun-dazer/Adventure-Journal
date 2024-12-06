@@ -4,7 +4,6 @@ import upvote from "../../Images/upvote.png";
 
 const Tips = () => {
   const [tips, setTips] = useState([]);
-<<<<<<< HEAD
   const [newTip, setNewTip] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState(null); // For error handling
@@ -28,10 +27,6 @@ const Tips = () => {
       })
       .catch((error) => console.error("Error checking login status:", error));
   }, []);
-=======
-  const [newTip, setNewTip] = useState("");
-  const [error, setError] = useState(null);
->>>>>>> adding-gitignore
 
   // Fetch tips on load
   useEffect(() => {
@@ -109,7 +104,6 @@ const Tips = () => {
       <h2>Tips Forum</h2>
       {error && <p className="error">{error}</p>}
 
-<<<<<<< HEAD
       {/* Form for adding tips (visible only if logged in) */}
       {isLoggedIn ? (
         <form onSubmit={handleFormSubmit}>
@@ -124,29 +118,12 @@ const Tips = () => {
       ) : (
         <p className="login-prompt">Please log in to add a post.</p>
       )}
-=======
-      <form onSubmit={handleFormSubmit}>
-        <input
-          type="text"
-          value={newTip}
-          onChange={handleInputChange}
-          placeholder="Share your tip..."
-        />
-        <button type="submit">Add Tip</button>
-      </form>
->>>>>>> adding-gitignore
 
       <div className="TipsList">
         {tips.length === 0 ? (
           <p>No tips shared</p>
         ) : (
           tips
-<<<<<<< HEAD
-            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // Sort by most recent
-            .map((tip, index) => (
-              <div key={index} className="Tip">
-                <small>{tip.username}</small>
-=======
             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
             .map((tip) => (
                 <div key={tip.id} className="Tip">
@@ -159,7 +136,6 @@ const Tips = () => {
                     <span className="upvoteCount">{tip.upvotes || 0}</span>
                   </div>
                 </div>
->>>>>>> adding-gitignore
                 <p>{tip.content}</p>
               </div>
             ))

@@ -4,6 +4,11 @@ __pycache__/
 
 # Ignore the virtual environment
 adventurejournal_env/
+.venv/
+backend/.venv2/
 
 # Ignore node_modules (for the frontend)
 frontend/node_modules/
+
+#databases
+db.sqlite3

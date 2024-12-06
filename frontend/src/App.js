@@ -62,11 +62,8 @@ function App() {
 
       <main>
         <Routes>
-<<<<<<< HEAD
           <Route path="/" element={<Navigate to={isLoggedIn ? "/Profile" : "/Login"} />} />
-=======
           <Route path="/" element={<Navigate to ="/Home"/>}/>
->>>>>>> adding-gitignore
           <Route path="/Login" element={<LoginForm onLogin={handleLogin} />} />
           <Route path="/Home" element={<HomePage />} />
           <Route path="/Profile" element={<Profile onLogout={handleLogout} />} />
