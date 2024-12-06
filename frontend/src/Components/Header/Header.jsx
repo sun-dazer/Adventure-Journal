@@ -62,8 +62,8 @@ export default function Header({ isLoggedIn, onLogout }) {
           </>
         ) : (
           <>
-            <Link to="/Home" style={{ textDecoration: 'none' }}>
-              <button className="topButton">Home</button>
+            <Link to="/Explore" style={{ textDecoration: 'none' }}>
+              <button className="topButton">Explore</button>
             </Link>
             <div className="dropdown" ref={dropdownRef}>
               <button className="topButton dropdownButton" onClick={toggleDropdown}>
