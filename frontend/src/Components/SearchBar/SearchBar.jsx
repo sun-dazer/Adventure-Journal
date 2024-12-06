@@ -8,6 +8,7 @@ export default function SearchBar({ search, setSearch }) {
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && search.trim() !== "") {
       navigate(`/user/${search.trim()}`);
+      window.location.reload();
     }
   };
 

@@ -1,4 +1,3 @@
-/* User Profile Page Styles */
 .UserProfilePage {
     max-width: 600px;
     margin: 2rem auto;
@@ -59,10 +58,28 @@
     background-color: rgb(137, 210, 220);
     color: white;
   }
-  
-  /* Centered Content */
   .center-content {
     text-align: center;
     margin: 2rem 0;
+  }
+  
+  .error-container {
+    margin-top: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Full height of the body */
+    width: 100%; /* Full width of the body */
+  }
+  
+  .error-message {
+    font-size: 18px;
+    color: #333; /* Dark text color */
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9; /* Light gray background for the error message */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for better visibility */
   }
   
