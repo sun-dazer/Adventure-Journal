@@ -4,18 +4,18 @@ from . import views
 
 
 urlpatterns = [
-    path("register", views.register, name="register"),
-    path("login", views.login, name="login"),
-    path("logout/", views.logout, name="logout"),
-    path("deregister", views.deregister, name="deregister"),
-    path("save-tip/", views.save_tip_view, name="save-tip"),
-    path("get-tips/", views.get_tips_view, name="get-tips"),
-    path("upvote-tip/", views.upvote_tip, name="upvote_tip"),
-    path("get_user_info/", views.get_user_info, name="get_user_info"),
-    path("follow/", views.follow, name="follow"),
-    path("save-post/", views.save_post_view, name="save-post"),
-    path("get-posts/", views.get_posts_view, name="get-posts"),
-    path("upvote-post/", views.upvote_post, name="upvote_post"),
-    path("save_image/", views.save_image, name="save_image"),
-    path("get_image/", views.get_image, name="get_image"),
+    path("register", views.register, name="register"), # Input: account info Output: success or failure
+    path("login", views.login, name="login"), # Input: username+password Output: success or failure
+    path("logout/", views.logout, name="logout"), # Input: _ Output: success or failure
+    path("deregister", views.deregister, name="deregister"), # Input: username+password Output: success or failure
+    path("save-tip/", views.save_tip_view, name="save-tip"), # Input: tips content Output: success or failure
+    path("get-tips/", views.get_tips_view, name="get-tips"), # Input: _ Output: all tips
+    path("upvote-tip/", views.upvote_tip, name="upvote_tip"), # Input: tipID Output: success or failure
+    path("get_user_info/", views.get_user_info, name="get_user_info"), # Input: username Output: profile information
+    path("follow/", views.follow, name="follow"), # Input: usernameToFollow Output: success or failure
+    path("save-post/", views.save_post_view, name="save-post"), # Input: post contents, location, and imageID Output: success or failure
+    path("get-posts/", views.get_posts_view, name="get-posts"), # Input: _ Output: all posts
+    path("upvote-post/", views.upvote_post, name="upvote_post"), # Input: postID Output: success or failure
+    path("save_image/", views.save_image, name="save_image"), # Input: image (put image in body and make the data type image) Output: imageID
+    path("get_image/", views.get_image, name="get_image"), # Input: imageID Output: image (put image in body and make the data type image)
 ]
