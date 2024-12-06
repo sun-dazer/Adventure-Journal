@@ -178,7 +178,6 @@
         </div>
         <div className="ProfileActions">
           <button onClick={() => setIsEditing(true)}>Edit Profile</button>
-          <button onClick={handleLogout}>Logout</button>
         </div>
       </div>
     )}

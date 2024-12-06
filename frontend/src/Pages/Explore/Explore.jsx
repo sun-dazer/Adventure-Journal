@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './Explore.css'; 
-
 const Explore = () => {
   const [username, setUsername] = useState(null);
   const [error, setError] = useState(null);

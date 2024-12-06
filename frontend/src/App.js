@@ -69,7 +69,7 @@ function App() {
           <Route path= "user/:username" element={<UserProfile />} />
           <Route path="/CreateProfiles" element={<CreateProfiles />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
-          <Route path="/Explore" element={<Explore />} />
+          <Route path="/Explore" element={<Explore onLogout={handleLogout} />} />
           <Route path="/Tips" element={<Tips />} />
           <Route path="/Posts" element={<Posts />} />
         </Routes>

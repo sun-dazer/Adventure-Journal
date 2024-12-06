@@ -36,7 +36,7 @@ const LoginForm = ({ onLogin }) => {
         .then((data) => {
             console.log(data.msg); // Successfully logged in
             onLogin()
-            navigate('/Home');
+            navigate('/Explore');
         })
         .catch((error) => {
             console.error("Login error:", error);

@@ -1,20 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; 
 import './Header.css';
 
 export default function Header({ isLoggedIn, onLogout }) {
-  const [dropdownOpen, setDropdownOpen] = useState(false); 
-  const dropdownRef = useRef(null); 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate(); 
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
   const handleOptionClick = () => {
-    setDropdownOpen(false); // Close dropdown when an option is clicked
+    setDropdownOpen(false); 
   };
 
-  // Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -28,6 +28,12 @@ export default function Header({ isLoggedIn, onLogout }) {
       document.removeEventListener('click', handleClickOutside); 
     };
   }, []);
+
+  // Handle logout and redirect to Home page
+  const handleLogout = () => {
+    onLogout(); // Ensure the parent's onLogout function is called to log out the user
+    navigate('/Home'); // Redirect to the Home page after logout
+  };
 
   return (
     <div className="Header">
@@ -87,6 +93,7 @@ export default function Header({ isLoggedIn, onLogout }) {
             <Link to="/Profile" style={{ textDecoration: 'none' }}>
               <button className="topButton">Profile</button>
             </Link>
+            <button className="topButton" onClick={handleLogout}>Logout</button>
           </>
         )}
       </div>
