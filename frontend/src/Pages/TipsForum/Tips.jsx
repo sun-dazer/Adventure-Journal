@@ -6,7 +6,27 @@ const Tips = () => {
   const [tips, setTips] = useState([]);
   const [newTip, setNewTip] = useState("");
   const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const username = localStorage.getItem('username') || 'someperson'; // Retrieve from local storage if needed
+  const [setUsername] = useState(null);
 
+  useEffect(() => {
+    fetch("http://localhost:8000/app/check-login/", {
+      method: "GET",
+      credentials: "include", // Include cookies for session-based authentication
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.is_logged_in) {
+          setIsLoggedIn(true);
+          setUsername(data.username); // Store the logged-in user's username
+        } else {
+          setIsLoggedIn(false);
+        }
+      })
+      .catch((error) => console.error("Error checking login status:", error));
+  }, []);
+  
   // Fetch tips on load
   useEffect(() => {
     fetch("http://localhost:8000/app/get-tips/", {
@@ -83,15 +103,19 @@ const Tips = () => {
       <h2>Tips Forum</h2>
       {error && <p className="error">{error}</p>}
 
-      <form onSubmit={handleFormSubmit}>
-        <input
-          type="text"
-          value={newTip}
-          onChange={handleInputChange}
-          placeholder="Share your tip..."
-        />
-        <button type="submit">Add Tip</button>
-      </form>
+      {isLoggedIn ? (
+        <form onSubmit={handleFormSubmit}>
+          <input
+            type="text"
+            value={newTip}
+            onChange={handleInputChange}
+            placeholder="Share your tip..."
+          />
+          <button type="submit">Add Tip</button>
+        </form>
+      ) : (
+        <p className="login-prompt">Please log in to add a post.</p>
+      )}
 
       <div className="TipsList">
         {tips.length === 0 ? (
