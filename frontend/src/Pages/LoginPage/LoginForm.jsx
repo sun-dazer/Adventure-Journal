@@ -28,7 +28,7 @@ const LoginForm = ({ onLogin }) => {
         }).then((resp) => {
             if (!resp.ok) {
                 return resp.json().then((err) => {
-                    throw new Error(err.msg);  // Handle JSON parsing errors here
+                    throw new Error(err.msg || "Incorrect username or password.");  // Handle JSON parsing errors here
                 });
             }
             return resp.json();
@@ -63,6 +63,12 @@ const LoginForm = ({ onLogin }) => {
                     {/* link instead of (hyperlink?) */}
                     <Link to="/ForgotPassword">Forgot password?</Link>
                 </div>
+
+                {error && (
+                    <div className="error-message">
+                        {error}
+                    </div>
+                )}
 
                 <button type="submit">Login</button>
 

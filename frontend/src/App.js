@@ -12,7 +12,7 @@ import Tips from "./Pages/TipsForum/Tips";
 import HeaderWrapper from "./Components/HeaderWrapper/Wrapper";
 import Footer from "./Components/Footer/Footer";
 
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -59,6 +59,7 @@ function App() {
 
       <main>
         <Routes>
+          <Route path="/" element={<Navigate to ="/Home"/>}/>
           <Route path="/Login" element={<LoginForm onLogin={handleLogin} />} />
           <Route path="/Home" element={<HomePage />} />
           <Route path="/Profile" element={<Profile onLogout={handleLogout} />} />
