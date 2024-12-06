@@ -9,7 +9,6 @@ const Posts = () => {
   const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
 
-  // Fetch posts on load
   useEffect(() => {
     fetch("http://localhost:8000/app/get-posts/", {
       method: "GET",
@@ -130,9 +129,9 @@ const Posts = () => {
                     <span className="upvoteCount">{post.upvotes || 0}</span>
                   </div>
                 </div>
+                {post.location && <p className="PostLocation">Location: {post.location}</p>}
                 <p>{post.content}</p>
                 {post.image && <img src={post.image} alt="Post Image" className="PostImage" />}
-                {post.location && <p className="PostLocation">Location: {post.location}</p>}
               </div>
             ))
         )}
