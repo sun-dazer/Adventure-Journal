@@ -48,7 +48,8 @@ def save_tip(user, content):
             "username": user,
             "content": content,
             #changed here
-            "created_at": datetime.datetime.utcnow()
+            "created_at": datetime.datetime.utcnow(),
+            "upvotes": 0
         })
         print(f"Tip saved for user {user}: {content}")
         return True

@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
 from .mongo.main import client
+from bson import ObjectId
 
 @csrf_exempt
 def register(request):
@@ -115,14 +116,16 @@ def save_tip_view(request):
 
 @csrf_exempt
 def get_tips_view(request):
-    
-        #username = request.session.get('username')
-        #if not username:
-        #    return JsonResponse({"msg": "User is not logged in!"}, status=403)
+    if request.method == "GET":
         collection = client.get_database("local").get_collection("tips")
-        tips = list(collection.find({}, {"_id": 0}))
-        #tips = get_tips()
+        tips_cursor = collection.find({}, {"username": 1, "content": 1, "created_at": 1, "upvotes": 1})
+        tips = []
+        for tip in tips_cursor:
+            tip['id'] = str(tip['_id'])  # Convert ObjectId to string and assign to 'id'
+            del tip['_id']  # Remove the original '_id' field
+            tips.append(tip)
         return JsonResponse({"tips": tips}, safe=False, status=200)
+    return JsonResponse({"msg": "Only GET requests are allowed"}, status=405)
 
 @csrf_exempt
 def get_profile_view(request):
@@ -254,3 +257,49 @@ def get_user_profile_view(request):
 
         return JsonResponse({"profile": profile}, status=200)
     return JsonResponse({"msg": "Only GET requests are allowed"}, status=405)
+
+@csrf_exempt
+def upvote_tip_view(request):
+    if request.method == "POST":
+        # Check if user is logged in
+        username = request.session.get("username")
+        if not username:
+            return JsonResponse({"msg": "User is not logged in."}, status=403)
+        
+        try:
+            data = json.loads(request.body)
+            tip_id = data.get("tip_id")
+            if not tip_id:
+                return JsonResponse({"msg": "No tip_id provided."}, status=400)
+            
+            collection = client.get_database("local").get_collection("tips")
+            
+            # Check if the user has already upvoted
+            tip = collection.find_one({"_id": ObjectId(tip_id)})
+            if not tip:
+                return JsonResponse({"msg": "Tip not found."}, status=404)
+            
+            if username in tip.get("upvoted_by", []):
+                return JsonResponse({"msg": "You have already upvoted this tip.", "upvotes": tip.get("upvotes", 0)}, status=400)
+            
+            # Add username to 'upvoted_by' and increment 'upvotes'
+            result = collection.update_one(
+                {"_id": ObjectId(tip_id)},
+                {
+                    "$inc": {"upvotes": 1},
+                    "$addToSet": {"upvoted_by": username}
+                }
+            )
+            
+            if result.modified_count == 0:
+                return JsonResponse({"msg": "Failed to upvote tip."}, status=500)
+            
+            # Retrieve the updated upvote count
+            updated_tip = collection.find_one({"_id": ObjectId(tip_id)}, {"upvotes": 1})
+            return JsonResponse({"msg": "Upvoted successfully!", "upvotes": updated_tip["upvotes"]}, status=200)
+        
+        except json.JSONDecodeError:
+            return JsonResponse({"msg": "Invalid JSON format"}, status=400)
+        except Exception as e:
+            return JsonResponse({"msg": f"Error upvoting tip: {str(e)}"}, status=500)
+    return JsonResponse({"msg": "Only POST requests are allowed"}, status=405)

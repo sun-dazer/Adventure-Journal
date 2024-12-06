@@ -7,8 +7,7 @@ const Tips = () => {
   const [newTip, setNewTip] = useState("");
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const username = localStorage.getItem('username') || 'someperson'; // Retrieve from local storage if needed
-  const [setUsername] = useState(null);
+  const [username, setUsername] = useState(null); // Corrected state definition
 
   useEffect(() => {
     fetch("http://localhost:8000/app/check-login/", {
@@ -20,8 +19,10 @@ const Tips = () => {
         if (data.is_logged_in) {
           setIsLoggedIn(true);
           setUsername(data.username); // Store the logged-in user's username
+          localStorage.setItem('username', data.username); // Optionally store in localStorage
         } else {
           setIsLoggedIn(false);
+          localStorage.removeItem('username');
         }
       })
       .catch((error) => console.error("Error checking login status:", error));
@@ -71,29 +72,40 @@ const Tips = () => {
         return response.json();
       })
       .then(() => {
-        window.location.reload();
+        setNewTip(""); // Clear the input field
+        // Optionally, fetch tips again instead of reloading
+        return fetch("http://localhost:8000/app/get-tips/", {
+          method: "GET",
+          credentials: "include",
+        });
       })
+      .then((response) => response.json())
+      .then((data) => setTips(data.tips))
       .catch((error) => console.error("Error saving tip:", error));
   };
 
   // Handle upvote
   const handleUpvote = (tipId) => {
-    fetch(`http://localhost:8000/app/upvote-tip/${tipId}/`, {
+    fetch("http://localhost:8000/app/upvote-tip/", {
       method: "POST",
       credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tip_id: tipId }), // Send tip_id in the request body
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to upvote tip");
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.msg === "Upvoted successfully!") {
+          setTips((prevTips) =>
+            prevTips.map((tip) =>
+              tip.id === tipId ? { ...tip, upvotes: data.upvotes } : tip
+            )
+          );
+        } else {
+          console.error("Error:", data.msg);
+          // Optionally, display an error message to the user
         }
-        return response.json();
-      })
-      .then((updatedTip) => {
-        setTips((prevTips) =>
-          prevTips.map((tip) =>
-            tip.id === updatedTip.id ? { ...tip, upvotes: updatedTip.upvotes } : tip
-          )
-        );
       })
       .catch((error) => console.error("Error upvoting tip:", error));
   };
@@ -124,7 +136,7 @@ const Tips = () => {
           tips
             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
             .map((tip) => (
-                <div key={tip.id} className="Tip">
+              <div key={tip.id} className="Tip">
                 <div className="TipHeader">
                   <small className="TipUsername">{tip.username}</small>
                   <div className="TipActions">
