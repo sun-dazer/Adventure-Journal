@@ -17,9 +17,10 @@ def register(request):
             dob = data.get("dob")
             username = data.get("username")
             password = data.get("password")
+            bio = ""
             
             # Pass all fields to make_account
-            if make_account(first_name, last_name, dob, username, password):
+            if make_account(first_name, last_name, dob, username, password, bio):
                 return JsonResponse({"msg": "Success"}, status=200)
             
             return JsonResponse({"msg": "Account already exists with that name!"}, status=400)
@@ -126,6 +127,7 @@ def get_profile_view(request):
     if request.method == "GET":
         # Get the username from the session
         username = request.session.get('username')
+
         if not username:
             return JsonResponse({"msg": "User is not logged in!"}, status=403)
         
@@ -152,12 +154,12 @@ def update_profile_view(request):
             data = json.loads(request.body)
             first_name = data.get("first_name")
             last_name = data.get("last_name")
-            # bio = data.get("bio")
+            bio = data.get("bio")  #maybe added next?
 
             collection = client.get_database("local").get_collection("accounts")
             collection.update_one(
                 {"username": username},
-                {"$set": {"first_name": first_name, "last_name": last_name}}
+                {"$set": {"first_name": first_name, "last_name": last_name, "bio": bio}}
             )
             return JsonResponse({"msg": "Profile updated successfully!"}, status=200)
         except Exception as e:
