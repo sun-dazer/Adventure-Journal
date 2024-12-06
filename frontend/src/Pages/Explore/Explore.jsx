@@ -33,12 +33,8 @@ const Explore = () => {
 
   return (
     <div className="explore-wrapper">
-      <h2 className="explore-title">Explore</h2>
-      {username ? (
-        <p className="welcome-message">Welcome back, {username}!</p> 
-      ) : (
-        <p className="explore-description">Explore posts from popular creators.</p>
-      )}
+      <h2 className="explore-title">Welcome back, {username}!</h2>
+
     </div>
   );
 };

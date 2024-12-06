@@ -7,25 +7,50 @@ const UserProfile = () => {
   const [profileUser, setProfileUser] = useState(null);
   const [error, setError] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  // Fetch profile data
   useEffect(() => {
     fetch(`http://localhost:8000/app/get-user-profile/?username=${username}`, {
       credentials: "include",
     })
       .then((res) => {
-        if (!res.ok) {
-          throw new Error("Hmm... The user you want to find doesn't exist.");
-        }
+        if (!res.ok) throw new Error("User not found.");
         return res.json();
       })
       .then((data) => {
         setProfileUser(data.profile);
+        setLoading(false);
         checkIfFollowing(data.profile);
       })
       .catch((err) => {
         setError(err.message);
+        setLoading(false);
       });
   }, [username]);
+
+  // Fetch posts data after profile is loaded
+  useEffect(() => {
+    if (profileUser) {
+      fetch(`http://localhost:8000/app/get-posts/?username=${profileUser.username}`, {
+        credentials: "include",
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to load posts.");
+          return res.json();
+        })
+        .then((data) => {
+          // Filter posts by the username of the profile user
+          const filteredPosts = data.posts.filter(post => post.username === profileUser.username);
+          setPosts(filteredPosts); // Set posts if available
+        })
+        .catch((err) => {
+          console.error("Error fetching posts:", err);
+          setPosts([]); // Set empty array on error
+        });
+    }
+  }, [profileUser]); // Only run when profileUser changes
 
   const checkIfFollowing = (profile) => {
     // Check if the logged-in user is following the profile user
@@ -89,7 +114,7 @@ const UserProfile = () => {
     );
   }
 
-  if (!profileUser) {
+  if (loading) {
     return <div>Loading user profile...</div>;
   }
 
@@ -99,12 +124,28 @@ const UserProfile = () => {
       <p><strong>Followers:</strong> {profileUser.followers ? profileUser.followers.length : 0}</p>
       <p><strong>Following:</strong> {profileUser.following ? profileUser.following.length : 0}</p>
       <p><strong>Bio:</strong> {profileUser.bio || "This user hasn't written a bio yet."}</p>
-      
+
       <div className="follow-actions">
         {isFollowing ? (
           <button onClick={handleUnfollow}>Unfollow</button> // Show Unfollow button if following
         ) : (
           <button onClick={handleFollow}>Follow</button> // Show Follow button if not following
+        )}
+      </div>
+
+      <div className="user-posts">
+        <h3>{profileUser.username}'s Posts</h3>
+        {posts.length === 0 ? (
+          <p>This user hasn't posted anything yet.</p>
+        ) : (
+          posts.map((post, index) => (
+            <div key={index} className="post-card">
+              <p><strong>{post.username}</strong> - {post.location}</p>
+              <p>{post.content}</p>
+              <p><em>Posted on: {new Date(post.created_at).toLocaleDateString()}</em></p>
+              <p><strong>Upvotes:</strong> {post.upvotes}</p>
+            </div>
+          ))
         )}
       </div>
     </div>
