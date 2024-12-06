@@ -1,0 +1,9 @@
+# Ignore Python cache files
+*.pyc
+__pycache__/
+
+# Ignore the virtual environment
+adventurejournal_env/
+
+# Ignore node_modules (for the frontend)
+frontend/node_modules/

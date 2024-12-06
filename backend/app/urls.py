@@ -13,7 +13,10 @@ urlpatterns = [
     path('update-profile/', views.update_profile_view, name='update_profile'),
     path('get-profile/', views.get_profile_view, name='get_profile'),
     path("check-login/", views.check_login_status, name="check-login"),
-    path("follow/", views.follow_user, name="follow_user"),
+    path("follow_in/", views.follow_user, name="follow_user"),   #check here
     path("unfollow/", views.unfollow_user, name="unfollow_user"),
     path("get-user-profile/", views.get_user_profile_view, name="get_user_profile"),
+    path("get_user_info/", views.get_user_info, name="get_user_info"),
+    path("upvote/", views.upvote, name="upvote"),
+    path("follow/", views.follow, name="follow"),
 ]

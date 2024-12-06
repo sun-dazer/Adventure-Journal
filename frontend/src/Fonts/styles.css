@@ -5,6 +5,10 @@
     min-height: 100vh; /* Full viewport height */
     width: 100vw;      /* Full viewport width */
     overflow-x: hidden; /* Prevent horizontal scrolling */
+    background-image: url('../Images/background.jpeg'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the whole area */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat;
 }
   
 body {

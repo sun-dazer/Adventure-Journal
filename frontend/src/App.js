@@ -8,6 +8,8 @@ import CreateProfiles from "./Pages/MakeProfile/CreateProfiles";
 import ForgotPassword from "./Pages/ForgotPassword/forgotPassword";
 import Explore from "./Pages/Explore/Explore";
 import Tips from "./Pages/TipsForum/Tips";
+import Posts from "./Pages/HikePosts/HikePosts";
+
 
 import HeaderWrapper from "./Components/HeaderWrapper/Wrapper";
 import Footer from "./Components/Footer/Footer";
@@ -60,7 +62,11 @@ function App() {
 
       <main>
         <Routes>
+<<<<<<< HEAD
           <Route path="/" element={<Navigate to={isLoggedIn ? "/Profile" : "/Login"} />} />
+=======
+          <Route path="/" element={<Navigate to ="/Home"/>}/>
+>>>>>>> adding-gitignore
           <Route path="/Login" element={<LoginForm onLogin={handleLogin} />} />
           <Route path="/Home" element={<HomePage />} />
           <Route path="/Profile" element={<Profile onLogout={handleLogout} />} />
@@ -69,6 +75,7 @@ function App() {
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/Explore" element={<Explore />} />
           <Route path="/Tips" element={<Tips />} />
+          <Route path="/Posts" element={<Posts />} />
         </Routes>
       </main>
 

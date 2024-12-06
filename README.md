@@ -32,6 +32,13 @@ Make sure you have the following installed:
 
 ---
 
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/adventure-journal.git
+   # Adventure Journal
+
+
 ## Backend Setup (Set up first)
 
 1. **Navigate to the backend directory:**
@@ -81,14 +88,6 @@ Make sure you have the following installed:
 
    The backend server will now run at [http://localhost:8000](http://localhost:8000).
 ---
-
-### Frontend Setup
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/adventure-journal.git
-   # Adventure Journal
 
 ## Frontend Setup
 

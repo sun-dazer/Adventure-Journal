@@ -29,7 +29,11 @@ def make_account(first_name, last_name, dob, user, passw, bio, followers, follow
         account = collection.find_one({"username":user})
         if account is not None:
             return False
+<<<<<<< HEAD
         collection.insert_one({"first_name": first_name, "last_name": last_name, "dob": dob, "username":user, "password":passw, "bio":bio, "followers":followers, "following":following})
+=======
+        collection.insert_one({"first_name": first_name, "last_name": last_name, "dob": dob, "username":user, "password":passw, "posts":[], "upvoted":[], "followers":[], "following":[]})
+>>>>>>> adding-gitignore
         return True
 
 def delete_account(user, passw):
@@ -39,19 +43,33 @@ def delete_account(user, passw):
         client.get_database("local").get_collection("accounts").delete_many({"username":user})
     return False
 
+def get_user(user):
+    with client.start_session(causal_consistency=True) as session:
+        return client.get_database("local").get_collection("accounts").find_one({"username":user})
+    return None
+
 #my tips
 def save_tip(user, content):
     with client.start_session(causal_consistency=True) as session:
+        collection = client.get_database("local").get_collection("accounts")
+        account = collection.find_one({"username":user})
+        if account is None:
+            return False
         # Save the tip in the `tips` collection
         collection = client.get_database("local").get_collection("tips")
-        collection.insert_one({
+        result = collection.insert_one({
             "username": user,
             "content": content,
             #changed here
-            "created_at": datetime.datetime.utcnow()
+            "created_at": datetime.datetime.utcnow(),
+            "upvotes": 0
         })
         print(f"Tip saved for user {user}: {content}")
+        collection = client.get_database("local").get_collection("accounts")
+        account["posts"].append(result.inserted_id)
+        collection.update_one({"username":user}, {"$set":{"posts":account["posts"]}})
         return True
+    return False
 
 def get_tips():
     with client.start_session(causal_consistency=True) as session:
@@ -60,3 +78,26 @@ def get_tips():
         tips = list(collection.find({}, {"_id": 0}))  # Exclude MongoDB `_id` field
         print(f"Retrieved tips: {tips}")
         return tips
+    
+def upvote_db(username, tipID):
+    user = get_user(username)
+    if user is None or tipID in user["upvoted"]:
+        return False
+    user["upvoted"].append(tipID)
+    with client.start_session(causal_consistency=True) as session:
+        collection = client.get_database("local").get_collection("accounts")
+        collection.update_one({"username":username}, {"$set":{"upvoted":user["upvoted"]}})
+    return True
+    
+def follow_db(username, otherUsername):
+    user = get_user(username)
+    otherUser = get_user(otherUser)
+    if user is None or otherUser is None or otherUsername in user["following"]:
+        return False
+    user["following"].append(otherUsername)
+    otherUser["followers"].append(username)
+    with client.start_session(causal_consistency=True) as session:
+        collection = client.get_database("local").get_collection("accounts")
+        collection.update_one({"username":username}, {"$set":{"upvoted":user["following"]}})
+        collection.update_one({"username":otherUsername}, {"$set":{"upvoted":otherUser["followers"]}})
+    return True

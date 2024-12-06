@@ -1,13 +1,16 @@
 .HomePage {
-    text-align: center;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff; 
+  margin: 20px auto; 
+  margin-top: 0px;
+  max-width: 90%; 
+}  
   .logoTxt {
     max-width: 100%;
     height: auto;
     margin: 20px 0;
+    margin-top: 50px;
   }
   
   .aboutSection {
@@ -56,6 +59,7 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     width: 200px; 
     max-width: 250px; 
+    margin-bottom: 50px;
   }
   
   .teamMember:hover {
