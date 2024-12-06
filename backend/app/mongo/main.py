@@ -61,3 +61,44 @@ def get_tips():
         tips = list(collection.find({}, {"_id": 0}))  # Exclude MongoDB `_id` field
         print(f"Retrieved tips: {tips}")
         return tips
+
+import datetime
+from pymongo import MongoClient
+
+client = MongoClient("mongodb://localhost:27017/")
+
+def save_hike_post(user, content, location):
+    with client.start_session(causal_consistency=True) as session:
+        collection = client.get_database("local").get_collection("hike_posts")
+        collection.insert_one({
+            "username": user,
+            "content": content,
+            "location": location,
+            "created_at": datetime.datetime.utcnow(),
+            "upvotes": 0,
+            "upvoted_by": []  # Track users who upvoted
+        })
+        print(f"Hike post saved for user {user}: {content}")
+        return True
+
+def get_hike_posts():
+    with client.start_session(causal_consistency=True) as session:
+        collection = client.get_database("local").get_collection("hike_posts")
+        posts = list(collection.find({}, {"_id": 0, "upvoted_by": 0}))  # Exclude `upvoted_by`
+        return posts
+
+def upvote_hike_post(post_id, username):
+    collection = client.get_database("local").get_collection("hike_posts")
+    post = collection.find_one({"_id": ObjectId(post_id)})
+    if not post:
+        return {"error": "Post not found."}
+    if username in post.get("upvoted_by", []):
+        return {"error": "You have already upvoted this post."}
+
+    collection.update_one(
+        {"_id": ObjectId(post_id)},
+        {"$inc": {"upvotes": 1}, "$addToSet": {"upvoted_by": username}}
+    )
+    updated_post = collection.find_one({"_id": ObjectId(post_id)}, {"upvotes": 1})
+    return {"msg": "Upvoted successfully!", "upvotes": updated_post["upvotes"]}
+

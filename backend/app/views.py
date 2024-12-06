@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .mongo.main import check, make_account, delete_account, save_tip, get_tips
+from .mongo.main import check, make_account, delete_account, save_tip, get_tips, save_hike_post, get_hike_posts, upvote_hike_post
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
@@ -303,3 +303,52 @@ def upvote_tip_view(request):
         except Exception as e:
             return JsonResponse({"msg": f"Error upvoting tip: {str(e)}"}, status=500)
     return JsonResponse({"msg": "Only POST requests are allowed"}, status=405)
+
+@csrf_exempt
+def get_hike_posts_view(request):
+    if request.method == "GET":
+        posts = get_hike_posts()
+        return JsonResponse({"posts": posts}, safe=False, status=200)
+    return JsonResponse({"msg": "Only GET requests are allowed"}, status=405)
+
+
+@csrf_exempt
+def save_hike_post_view(request):
+    if request.method == "POST":
+        username = request.session.get("username")
+        if not username:
+            return JsonResponse({"msg": "User is not logged in!"}, status=403)
+
+        try:
+            data = request.POST
+            content = data.get("content")
+            location = data.get("location")
+
+            if not content:
+                return JsonResponse({"msg": "Content is required."}, status=400)
+
+            save_hike_post(username, content, location)
+            return JsonResponse({"msg": "Hike post saved successfully!"}, status=200)
+        except Exception as e:
+            return JsonResponse({"msg": f"Error saving post: {str(e)}"}, status=500)
+    return JsonResponse({"msg": "Only POST requests are allowed"}, status=405)
+
+
+
+@csrf_exempt
+def upvote_hike_post_view(request, post_id):
+    if request.method == "POST":
+        username = request.session.get("username")
+        if not username:
+            return JsonResponse({"msg": "User is not logged in."}, status=403)
+
+        try:
+            result = upvote_hike_post(post_id, username)
+            if "error" in result:
+                return JsonResponse({"msg": result["error"]}, status=400)
+            return JsonResponse(result, status=200)
+        except Exception as e:
+            return JsonResponse({"msg": f"Error upvoting post: {str(e)}"}, status=500)
+    return JsonResponse({"msg": "Only POST requests are allowed"}, status=405)
+
+

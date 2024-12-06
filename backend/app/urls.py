@@ -17,5 +17,7 @@ urlpatterns = [
     path("follow/", views.follow_user, name="follow_user"),
     path("unfollow/", views.unfollow_user, name="unfollow_user"),
     path("get-user-profile/", views.get_user_profile_view, name="get_user_profile"),
-    path("upvote-tip/", views.upvote_tip_view, name="upvote_tip"),
+    path("get-posts/", views.get_hike_posts_view, name="get_posts"),
+    path("save-post/", views.save_hike_post_view, name="save_post"),
+    path("upvote-post/<str:post_id>/", views.upvote_hike_post_view, name="upvote_post")
 ]
