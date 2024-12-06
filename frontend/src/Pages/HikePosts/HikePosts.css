@@ -8,10 +8,6 @@
     transition: transform 0.3s ease;
   }
   
-  .Posts:hover {
-    transform: scale(1.02);
-  }
-  
   .Posts form {
     display: flex;
     flex-direction: column;

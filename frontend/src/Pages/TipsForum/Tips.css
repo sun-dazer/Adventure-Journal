@@ -8,16 +8,11 @@
   transition: transform 0.3s ease;
 }
 
-.Tips:hover {
-  transform: scale(1.02);
-}
-
 .Tips form {
   display: flex;
   gap: 10px;
   margin-bottom: 30px;
 }
-
 .Tips input[type="text"] {
   flex: 1;
   padding: 12px;

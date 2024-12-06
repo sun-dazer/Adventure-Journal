@@ -6,6 +6,7 @@
     width: 100%;
     margin-top: 0px;
     padding: 0px 30px;
+    background-color: white;
 }
 
 .header-navigation{
@@ -17,7 +18,7 @@
 .logo {
     position: absolute;
     left: 2vw;
-    max-width: 200px; 
+    max-width: 150px; 
     max-height: 100px; 
 }
   
