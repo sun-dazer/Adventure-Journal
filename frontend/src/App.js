@@ -4,6 +4,7 @@ import "./Fonts/styles.css";
 import LoginForm from "./Pages/LoginPage/LoginForm";
 import HomePage from "./Pages/AboutUs/Home";
 import Profile from "./Pages/ViewProfile/Profile";
+import UserProfile from "./Pages/ViewProfile/UserProfile";
 import CreateProfiles from "./Pages/MakeProfile/CreateProfiles";
 import ForgotPassword from "./Pages/ForgotPassword/forgotPassword";
 import Explore from "./Pages/Explore/Explore";
@@ -65,6 +66,7 @@ function App() {
           <Route path="/Login" element={<LoginForm onLogin={handleLogin} />} />
           <Route path="/Home" element={<HomePage />} />
           <Route path="/Profile" element={<Profile onLogout={handleLogout} />} />
+          <Route path= "user/:username" element={<UserProfile />} />
           <Route path="/CreateProfiles" element={<CreateProfiles />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/Explore" element={<Explore />} />
