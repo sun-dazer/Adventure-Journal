@@ -1,5 +1,6 @@
 import "./Profile.css";
 import React, { useState, useEffect } from "react";
+import Avatar from '../../Images/Avatar.webp';
 
 const Profile = ({ onLogout }) => {
   const [user, setUser] = useState(null);
@@ -20,14 +21,16 @@ const Profile = ({ onLogout }) => {
       })
       .then((data) => {
         console.log("Fetched profile data:", data); // Debug log
-        setUser(data);
+        const userData = data.profile;
+        setUser(userData);
         console.log("User state:", user);
         setFormData({
-          first_name: data.first_name || "",
-          last_name: data.last_name || "",
-          dob: data.dob || "",
-          username: data.username || "",
-          password: data.password || "",
+          first_name: userData.first_name || "",
+          last_name: userData.last_name || "",
+          dob: userData.dob || "",
+          username: userData.username || "",
+          password: "",
+          bio: userData.bio || "",
         });
       })
       .catch((error) => {
@@ -87,8 +90,11 @@ const Profile = ({ onLogout }) => {
     // user is not logged in
     return (
       <div className="error-center">
-        <h2>{error}</h2>
-        <button onClick={handleLogout}>Login</button>
+        <h2>Login or Sign Up!</h2>
+        <p> Join Trail Tales to track your hikes, connect with fellow adventurers, and share your tips!</p>
+        <p>"The best journeys are the ones we share with others." – Avid Hiker</p>
+        <button onClick={handleLogout}>Join Here!</button>
+        
       </div>
     );
   }
@@ -104,78 +110,80 @@ const Profile = ({ onLogout }) => {
 
   return (
     <div className="ProfilePage">
-      <h2>Profile</h2>
-      {isEditing ? (
-        <form
-          className="EditProfileForm"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSave();
-          }}
-        >
-          <label>
-            First Name:
-            <input
-              type="text"
-              name="first_name"
-              value={formData.first_name}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Last Name:
-            <input
-              type="text"
-              name="last_name"
-              value={formData.last_name}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Date of Birth:
-            <input
-              type="date"
-              name="dob"
-              value={formData.dob}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Username:
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleInputChange}
-              disabled // Username should not be editable
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-          </label>
-          <button type="submit">Save</button>
-          <button type="button" onClick={() => setIsEditing(false)}>
-            Cancel
-          </button>
-        </form>
-      ) : (
-        <div className="ProfileDetails">
-          <p>Username: {user.username || "N/A"}</p>
-          <p>First Name: {user.first_name || "N/A"}</p>
-          <p>Last Name: {user.last_name || "N/A"}</p>
-          <p>Date of Birth: {user.dob || "N/A"}</p>
-          <p>Password: {user.password || "N/A"}</p>
-          <button onClick={() => setIsEditing(true)}>Edit Profile</button>
-        </div>
-      )}
-      <button onClick={handleLogout}>Logout</button>
+  <h2>Profile</h2>
+
+  {isEditing ? (
+    <form
+      className="EditProfileForm"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSave();
+      }}
+    >
+      <label>First Name:
+        <input
+          type="text"
+          name="first_name"
+          value={formData.first_name}
+          onChange={handleInputChange}
+        />
+      </label>
+      <label>Last Name:
+        <input
+          type="text"
+          name="last_name"
+          value={formData.last_name}
+          onChange={handleInputChange}
+        />
+      </label>
+      <label>Date of Birth:
+        <input
+          type="date"
+          name="dob"
+          value={formData.dob}
+          onChange={handleInputChange}
+        />
+      </label>
+      <label>Username:
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleInputChange}
+          disabled
+        />
+      </label>
+      <label>Bio:
+        <textarea
+          name="bio"
+          value={formData.bio}
+          onChange={handleInputChange}
+        />
+      </label>
+      
+      <div className="ProfileActions">
+        <button type="submit">Save</button>
+        <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+      </div>
+    </form>
+  ) : (
+    <div className="ProfileDetails">
+      <img src={Avatar} alt="Profile Avatar" />
+      <div className="ProfileInfo">
+        <p><strong>Username:</strong> {user.username || ""}</p>
+        <p><strong>First Name:</strong> {user.first_name || ""}</p>
+        <p><strong>Last Name:</strong> {user.last_name || ""}</p>
+        <p><strong>Date of Birth:</strong> {user.dob || ""}</p>
+        {/* <p><strong>Password:</strong> {"******"}</p> */}
+        <p><strong>Bio:</strong> {user.bio || "You haven't added a bio yet. Click Edit Profile to add one."}</p>
+      </div>
+      <div className="ProfileActions">
+        <button onClick={() => setIsEditing(true)}>Edit Profile</button>
+        <button onClick={handleLogout}>Logout</button>
+      </div>
     </div>
+  )}
+</div>
   );
 };
 
