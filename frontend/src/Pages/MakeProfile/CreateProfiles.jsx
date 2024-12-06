@@ -38,6 +38,7 @@ const CreateProfiles = () => {
       })
       .then((data) => {
         console.log(data.msg);
+        navigate("/login");
         // Redirect or show success message
       })
       .catch((error) => {
