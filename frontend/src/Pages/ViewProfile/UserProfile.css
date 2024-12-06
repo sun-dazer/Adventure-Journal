@@ -1,1 +1,68 @@
-
+/* User Profile Page Styles */
+.UserProfilePage {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .UserProfilePage h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  
+  .UserProfilePage p {
+    font-size: 1rem;
+    color: #555;
+    margin: 0.5rem 0;
+    padding: 0.75rem 1rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  /* Loading and Error Messages */
+  .error-center,
+  .loading-center {
+    text-align: center;
+    font-size: 1.25rem;
+    color: #444;
+    margin-top: 2rem;
+  }
+  
+  /* Buttons (For Follow/Unfollow or Actions) */
+  button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem auto;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  
+  button[type="submit"] {
+    background-color: rgb(137, 210, 220);
+    color: white;
+  }
+  
+  button[type="button"] {
+    background-color: rgb(137, 210, 220);
+    color: white;
+  }
+  
+  /* Centered Content */
+  .center-content {
+    text-align: center;
+    margin: 2rem 0;
+  }
+  

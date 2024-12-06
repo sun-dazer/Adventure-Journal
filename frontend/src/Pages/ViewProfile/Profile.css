@@ -66,12 +66,12 @@ button:hover {
 }
 
 button[type="submit"] {
-  background-color: #4caf50;
+  background-color: rgb(137, 210, 220);
   color: white;
 }
 
 button[type="button"] {
-  background-color: #f44336;
+  background-color: rgb(137, 210, 220);
   color: white;
 }
 
