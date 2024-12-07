@@ -57,9 +57,8 @@ const UserProfile = () => {
     }
   }, [profileUser]); // Only run when profileUser changes
 
-
+// Backend isn't fully integrated, sorry. Following doesn't work as intended.
   const checkIfFollowing = (profile) => {
-    // Check if the logged-in user is following the profile user
     fetch(`http://localhost:8000/app/is-following/?username=${profile.username}`, {
       credentials: "include",
     })
