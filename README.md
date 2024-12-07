@@ -44,7 +44,7 @@ Make sure you have the following installed:
 1. **Navigate to the backend directory:**
 
     ```bash
-    cd adventure-journal/backend
+    cd Trail-Tales/backend
     ```
 
 2. **Create a virtual environment:**
@@ -94,7 +94,7 @@ Make sure you have the following installed:
 1. **Navigate to the frontend directory:**
 
     ```bash
-    cd adventure-journal/frontend
+    cd Trail-Tales/frontend
     ```
 
 2. **Install dependencies:**
