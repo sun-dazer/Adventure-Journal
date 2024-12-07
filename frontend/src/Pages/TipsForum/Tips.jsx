@@ -19,7 +19,7 @@ const Tips = () => {
         if (data.is_logged_in) {
           setIsLoggedIn(true);
           setUsername(data.username); // Store the logged-in user's username
-          localStorage.setItem('username', data.username); // Optionally store in localStorage
+          localStorage.setItem('username', data.username); // Store in localStorage
         } else {
           setIsLoggedIn(false);
           localStorage.removeItem('username');
@@ -73,8 +73,7 @@ const Tips = () => {
       })
       .then(() => {
         setNewTip(""); // Clear the input field
-        // Optionally, fetch tips again instead of reloading
-        return fetch("http://localhost:8000/app/get-tips/", {
+        return fetch("http://localhost:8000/app/get-tips/", { // Fetch tips again instead of reloading
           method: "GET",
           credentials: "include",
         });
@@ -103,8 +102,7 @@ const Tips = () => {
             )
           );
         } else {
-          console.error("Error:", data.msg);
-          // Optionally, display an error message to the user
+          console.error("Error:", data.msg); // Display an error message to the user
         }
       })
       .catch((error) => console.error("Error upvoting tip:", error));
