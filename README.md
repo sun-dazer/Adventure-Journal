@@ -35,8 +35,9 @@ Make sure you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/adventure-journal.git
-   # Adventure Journal
+   git clone https://github.com/yourusername/Trail-Tales.git
+   cd Trail-Tales
+   # Trail-Tales
 
 
 ## Backend Setup (Set up first)
@@ -44,7 +45,7 @@ Make sure you have the following installed:
 1. **Navigate to the backend directory:**
 
     ```bash
-    cd Trail-Tales/backend
+    cd backend
     ```
 
 2. **Create a virtual environment:**
@@ -94,7 +95,7 @@ Make sure you have the following installed:
 1. **Navigate to the frontend directory:**
 
     ```bash
-    cd Trail-Tales/frontend
+    cd frontend
     ```
 
 2. **Install dependencies:**
