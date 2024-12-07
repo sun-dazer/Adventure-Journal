@@ -122,11 +122,6 @@ const Posts = () => {
               <div key={post.id} className="Post">
                 <div className="PostHeader">
                   <small className="PostUsername">{post.username}</small>
-                  <div className="PostActions">
-                    <button className="upvoteButton" onClick={() => handleUpvote(post.id)}>
-                      <img src={upvote} alt="Thumbs Up" />
-                    </button>
-                    <span className="upvoteCount">{post.upvotes || 0}</span>
                   </div>
                 </div>
                 {post.location && <p className="PostLocation">Location: {post.location}</p>}
