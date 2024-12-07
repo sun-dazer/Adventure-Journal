@@ -122,7 +122,6 @@ const Posts = () => {
               <div key={post.id} className="Post">
                 <div className="PostHeader">
                   <small className="PostUsername">{post.username}</small>
-                  </div>
                 </div>
                 {post.location && <p className="PostLocation">Location: {post.location}</p>}
                 <p>{post.content}</p>
