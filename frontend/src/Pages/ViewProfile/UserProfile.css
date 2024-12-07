@@ -25,88 +25,42 @@
   border-radius: 4px;
 }
 
-/* Loading and Error Messages */
-.error-center,
-.loading-center {
-  text-align: center;
-  font-size: 1.25rem;
-  color: #444;
+/* Container for all user posts */
+.user-posts {
   margin-top: 2rem;
-}
-
-/* Buttons (For Follow/Unfollow or Actions) */
-button {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem auto;
-  font-size: 0.9rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-button[type="submit"],
-button[type="button"] {
-  background-color: rgb(137, 210, 220);
-  color: white;
-}
-
-.center-content {
-  text-align: center;
-  margin: 2rem 0;
-}
-
-.error-container {
-  margin-top: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%; /* Full height of the body */
-  width: 100%; /* Full width of the body */
-}
-
-.error-message {
-  font-size: 18px;
-  color: #333; /* Dark text color */
-  padding: 20px;
-  text-align: center;
+  padding: 1rem;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9; /* Light gray background for the error message */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for better visibility */
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Styling for Follow/Unfollow button */
-.follow-actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+/* Individual posts */
+.user-posts .post-card {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  transition: box-shadow 0.3s ease;
 }
 
-.follow-actions button {
-  padding: 0.6rem 1.2rem;
-  background-color: rgb(137, 210, 220) ; /* Green for Follow */
-  color: white;
+.user-posts .post-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Post details */
+.user-posts .post-meta {
+  display: block;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* Unified post content */
+.user-posts .post-content {
   font-size: 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 0 10px;
-}
-
-.follow-actions button:hover {
-  background-color: rgb(120, 180, 200) f;
-}
-
-.follow-actions button.unfollow {
-  background-color: rgb(137, 210, 220) ; /* Red for Unfollow */
-}
-
-.follow-actions button.unfollow:hover {
-  background-color: rgb(120, 180, 200) f;
+  color: #333;
+  line-height: 1.5;
 }

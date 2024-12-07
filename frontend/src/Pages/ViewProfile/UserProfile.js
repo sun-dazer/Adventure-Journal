@@ -31,6 +31,7 @@ const UserProfile = () => {
   }, [username]);
 
   // Fetch posts data after profile is loaded
+  // Fetch posts data after profile is loaded
   useEffect(() => {
     if (profileUser) {
       fetch(`http://localhost:8000/app/get-posts/?username=${profileUser.username}`, {
@@ -43,7 +44,11 @@ const UserProfile = () => {
         .then((data) => {
           // Filter posts by the username of the profile user
           const filteredPosts = data.posts.filter(post => post.username === profileUser.username);
-          setPosts(filteredPosts); // Set posts if available
+          
+          // Sort posts by date in descending order (newest first)
+          const sortedPosts = filteredPosts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+          setPosts(sortedPosts); // Set sorted posts
         })
         .catch((err) => {
           console.error("Error fetching posts:", err);
@@ -51,6 +56,7 @@ const UserProfile = () => {
         });
     }
   }, [profileUser]); // Only run when profileUser changes
+
 
   const checkIfFollowing = (profile) => {
     // Check if the logged-in user is following the profile user
@@ -124,7 +130,7 @@ const UserProfile = () => {
       <p><strong>Followers:</strong> {profileUser.followers ? profileUser.followers.length : 0}</p>
       <p><strong>Following:</strong> {profileUser.following ? profileUser.following.length : 0}</p>
       <p><strong>Bio:</strong> {profileUser.bio || "This user hasn't written a bio yet."}</p>
-
+  
       <div className="follow-actions">
         {isFollowing ? (
           <button onClick={handleUnfollow}>Unfollow</button> // Show Unfollow button if following
@@ -132,7 +138,7 @@ const UserProfile = () => {
           <button onClick={handleFollow}>Follow</button> // Show Follow button if not following
         )}
       </div>
-
+  
       <div className="user-posts">
         <h3>{profileUser.username}'s Posts</h3>
         {posts.length === 0 ? (
@@ -140,16 +146,21 @@ const UserProfile = () => {
         ) : (
           posts.map((post, index) => (
             <div key={index} className="post-card">
-              <p><strong>{post.username}</strong> - {post.location}</p>
-              <p>{post.content}</p>
-              <p><em>Posted on: {new Date(post.created_at).toLocaleDateString()}</em></p>
-              <p><strong>Upvotes:</strong> {post.upvotes}</p>
+              <div className="post-details">
+                <span className="post-meta">
+                  <strong>{post.username}</strong> - {post.location} -{" "}
+                  <em>{new Date(post.created_at).toLocaleDateString()}</em>
+                </span>
+                <div className="post-content">{post.content}</div>
+              </div>
             </div>
           ))
         )}
       </div>
     </div>
   );
+  
+  
 };
 
 export default UserProfile;
